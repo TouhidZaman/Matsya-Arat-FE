@@ -1,5 +1,8 @@
 import { RouterProvider } from "react-router-dom";
 import routes from "./routes/routes";
+// import "antd/dist/antd.css";
+import "./assets/styles/main.css";
+import "./assets/styles/responsive.css";
 
 function App() {
   return (

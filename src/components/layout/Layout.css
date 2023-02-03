@@ -1,0 +1,46 @@
+.navigationIcon {
+  color: #bfbfbf;
+}
+.navBarNavigationIcon {
+  color: #1890ff;
+}
+.navigationIconActive {
+  color: white;
+}
+
+.active {
+  background-color: #ffffff;
+  font-weight: 600;
+  color: black;
+}
+
+.active span:nth-of-type(1) {
+  background-color: #1890ff !important;
+  color: #ffffff;
+}
+
+.boxShadow {
+  box-shadow: unset !important;
+}
+.logoBrand {
+  display: flex;
+  align-items: center;
+  padding-bottom: 20px;
+}
+.logoBrand img {
+  height: 50px !important;
+}
+.logoBrand span {
+  color: #1890ff;
+  font-size: 18px;
+  font-weight: 750;
+}
+.buttonAlignment {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.label {
+  text-transform: capitalize;
+}

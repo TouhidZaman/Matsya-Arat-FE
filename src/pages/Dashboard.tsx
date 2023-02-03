@@ -8,10 +8,8 @@ const Dashboard: React.FC = () => {
   return (
     <div>
       <Space wrap>
-        <Button type="primary" size={size}>
-          Primary
-        </Button>
-        <Button size={size}>Default</Button>
+        <Button type="primary">Primary</Button>
+        <Button>Default</Button>
       </Space>
     </div>
   );
