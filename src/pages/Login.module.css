@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 0 50px;
+}
+
+.loginDiv {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  margin-right: 50px;
+}
+
+.container h1 {
+  font-weight: 700;
+  font-size: 50px;
+  margin-bottom: 10px;
+}
+.container h3 {
+  color: #8c8c8c;
+  font-weight: 500;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.signInBtn {
+  width: 100% !important;
+}
