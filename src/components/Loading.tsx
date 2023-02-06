@@ -1,11 +1,12 @@
+import { Row } from "antd";
 import React from "react";
 import loading from "../assets/images/loading.svg";
 
 const Loading = () => {
   return (
-    <div className="flex justify-center">
+    <Row justify={"center"} align={"middle"} style={{ height: "100vh" }}>
       <img src={loading} alt="loading" />
-    </div>
+    </Row>
   );
 };
 

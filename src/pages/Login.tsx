@@ -1,47 +1,38 @@
-import React, { useState } from "react";
+import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button, Form, Input, Row, Space, Switch, Typography } from "antd";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { toast } from "react-hot-toast";
 
 import classes from "./Login.module.css";
-import auth from "../utils/firebase.init";
 import teddy from "../assets/images/teddy.png";
 import LoadingScreen from "../components/Loading";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { loginUser, resetError, selectAuth } from "../features/authSlice";
 
 const { Text } = Typography;
 
 function Login() {
-  const [error, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [loading, setLoading] = useState(false);
+  // The `state` arg is correctly typed as `RootState` already
+  const { user, isLoading, isError, error } = useAppSelector(selectAuth);
+  const dispatch = useAppDispatch();
 
   // Handling Navigation
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from.pathname || "/dashboard";
+  const from = location.state?.from?.pathname || "/";
 
-  const rememberMe = () => {};
+  useEffect(() => {
+    if (!isLoading && user) {
+      toast.success("Login successful");
+      navigate(from, { replace: true });
+    } else if (!isLoading && isError) {
+      dispatch(resetError());
+    }
+  }, [user, isLoading]);
 
   // Handling Form submit
   const handleLogin = (data: { email: string; password: string }) => {
-    setLoading(true);
-    const { email, password } = data;
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        setError(false);
-        setErrorMessage("");
-        setLoading(false);
-        const user = userCredential.user;
-        if (user) navigate(from, { replace: true });
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        setLoading(false);
-        setError(true);
-        setErrorMessage(errorCode);
-      });
+    dispatch(loginUser(data));
   };
 
   const signIn = (
@@ -78,30 +69,18 @@ function Login() {
           <Form.Item name="acceptTerms" valuePropName="checked">
             <Row justify="space-between">
               <Space>
-                <Switch defaultChecked onChange={rememberMe} />
+                <Switch defaultChecked />
                 <Text type="secondary">Remember me</Text>
               </Space>
-              {/* <Link to="/password-reset" type="link" style={{ padding: '0px' }}>
-                Forgot password?
-              </Link> */}
             </Row>
           </Form.Item>
-          {error && (
-            <Form.Item>
-              {error && <Text type="danger">{errorMessage}</Text>}
-            </Form.Item>
+          {isError && (
+            <Form.Item>{isError && <Text type="danger">{error}</Text>}</Form.Item>
           )}
           <Form.Item>
             <Button className={classes.signInBtn} type="primary" htmlType="submit">
               SIGN IN
             </Button>
-          </Form.Item>
-
-          <Form.Item>
-            Do not have an account?{" "}
-            <a target="_blank" rel="noreferrer" href="https://www.fuelworks.in/">
-              Sign-up
-            </a>
           </Form.Item>
         </Form>
       </div>
@@ -112,7 +91,7 @@ function Login() {
   );
 
   // Handling loading state
-  if (loading) {
+  if (isLoading) {
     return <LoadingScreen />;
   }
 
