@@ -4,6 +4,7 @@ import Login from "../pages/Login";
 import Dashboard from "../pages/Dashboard";
 import NotFound from "../components/NotFound";
 import PrivateRoute from "../utils/PrivateRoute";
+import AllCustomers from "../pages/customers/AllCustomers";
 
 const routes = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const routes = createBrowserRouter([
       {
         path: "/dashboard",
         element: <Dashboard />,
+      },
+      {
+        path: "/customers",
+        element: <AllCustomers />,
       },
       {
         path: "*",

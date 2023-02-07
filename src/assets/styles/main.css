@@ -1637,8 +1637,8 @@ ul.ant-menu.ant-menu-root.ant-menu-inline.ant-menu-light.left-nav
 .ant-table-thead > tr > th {
   color: #8c8c8c;
   font-weight: 700;
-  background-color: transparent;
-  font-size: 12px;
+  background-color: #fff !important;
+  font-size: 14px;
 }
 
 .ant-border-space th:before {
