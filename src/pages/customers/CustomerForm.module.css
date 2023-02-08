@@ -1,0 +1,12 @@
+.actionButtons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.selectInputField div {
+  height: 40px !important;
+  border-radius: 6px !important;
+}

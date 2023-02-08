@@ -1,7 +1,8 @@
-import React, { useContext, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { EditOutlined, PlusSquareOutlined } from "@ant-design/icons";
 import { Button, Col, Row, Table, Tooltip } from "antd";
+import UpdateCustomerModal from "./UpdateCustomerModal";
 
 function CustomersTable({
   customers,
@@ -10,11 +11,19 @@ function CustomersTable({
   customers: [];
   loading: boolean;
 }) {
+  const [editModalVisible, setEditModalVisible] = useState(false);
+  const [customerInfo, setCustomerInfo] = useState(null);
+
+  const shoEditModal = (customer: any) => {
+    setCustomerInfo(customer);
+    setEditModalVisible(true);
+  };
+
   const columns = [
     {
       title: "Customer Name",
       render: (customer: any) => (
-        <Link to={`/customers/${customer.id}/vehicles`}>{customer.name}</Link>
+        <Link to={`/customers/${customer._id}`}>{customer.name}</Link>
       ),
     },
     {
@@ -43,7 +52,7 @@ function CustomersTable({
           </Col>
           <Col offset={1}>
             <Tooltip title="Edit">
-              <Button type="text">
+              <Button type="text" onClick={() => shoEditModal(customer)}>
                 <EditOutlined />
               </Button>
             </Tooltip>
@@ -54,17 +63,26 @@ function CustomersTable({
   ];
 
   return (
-    <Table
-      {...{ loading }}
-      rowKey="_id"
-      columns={columns}
-      dataSource={customers}
-      pagination={{
-        pageSize: 14,
-        hideOnSinglePage: true,
-        //   className: classes.excludeMeFromPrint,
-      }}
-    />
+    <>
+      <Table
+        {...{ loading }}
+        rowKey="_id"
+        columns={columns}
+        dataSource={customers}
+        pagination={{
+          pageSize: 14,
+          hideOnSinglePage: true,
+          //   className: classes.excludeMeFromPrint,
+        }}
+      />
+      {editModalVisible ? (
+        <UpdateCustomerModal
+          modalVisible={editModalVisible}
+          setModalVisible={setEditModalVisible}
+          customerInfo={customerInfo}
+        />
+      ) : null}
+    </>
   );
 }
 
