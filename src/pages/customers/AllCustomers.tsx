@@ -10,6 +10,22 @@ import CustomersTable from "./CustomersTable";
 function AllCustomers() {
   const { data: customers = [], isLoading } = useGetCustomersQuery(true); //need to adjust this
   const [modalVisible, setModalVisible] = useState(false);
+  const [search, setSearch] = useState("");
+  let filteredCustomers = [];
+
+  //Applying search filtering
+  if (search) {
+    let keywordsArray = search.split(" ");
+    filteredCustomers = customers.filter((customer: any) =>
+      keywordsArray.some(
+        (keyword) =>
+          customer.name?.toLowerCase().includes(keyword.toLowerCase()) ||
+          customer.phone?.toLowerCase().includes(keyword.toLowerCase())
+      )
+    );
+  } else {
+    filteredCustomers = customers;
+  }
 
   return (
     <section className={classes.customers}>
@@ -22,9 +38,13 @@ function AllCustomers() {
         >
           New Customer
         </Button>
-        <Input placeholder="Search Customer" prefix={<SearchOutlined />} />
+        <Input
+          placeholder="Search Customer"
+          prefix={<SearchOutlined />}
+          onChange={(e) => setSearch(e.target.value)}
+        />
       </Row>
-      <CustomersTable customers={customers} loading={isLoading} />
+      <CustomersTable customers={filteredCustomers} loading={isLoading} />
       {modalVisible && (
         <AddCustomerModal
           modalVisible={modalVisible}

@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { toast } from "react-hot-toast";
 import { Form, Modal } from "antd";
 
 import CustomerForm from "./CustomerForm";
 import classes from "./SharedStyles.module.css";
+import { useUpdateCustomerMutation } from "../../features/customer/customersAPI";
 
 function UpdateCustomerModal({
   modalVisible,
@@ -14,8 +16,19 @@ function UpdateCustomerModal({
   customerInfo: any;
 }) {
   const [form] = Form.useForm();
+  const [patchCustomer, { isSuccess, isError }] = useUpdateCustomerMutation();
 
-  const handleCustomerUpdate = async (values: any) => {};
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Customer updated successfully");
+    } else if (isError) {
+      toast.error("Failed to update customer");
+    }
+  }, [isSuccess, isError]);
+
+  const handleCustomerUpdate = (updatedCustomer: any) => {
+    patchCustomer({ updatedCustomer, customerId: customerInfo._id });
+  };
 
   const handleCancel = () => {
     form.resetFields();
@@ -25,7 +38,7 @@ function UpdateCustomerModal({
   return (
     <Modal
       centered
-      visible={modalVisible}
+      open={modalVisible}
       footer={null}
       onCancel={() => setModalVisible(false)}
       width={750}

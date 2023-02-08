@@ -11,7 +11,7 @@ function CustomerForm({
 }: {
   form: FormInstance<any>;
   initialValues?: any;
-  onFinish: (values: any) => Promise<void>;
+  onFinish: (values: any) => void;
   onCancel: () => void;
   submitButtonText?: string;
 }) {
@@ -77,7 +77,7 @@ function CustomerForm({
 
       <Form.Item
         label="Email ID"
-        name="email_address"
+        name="email"
         rules={[
           {
             pattern: REGEX_PATTERNS.email,

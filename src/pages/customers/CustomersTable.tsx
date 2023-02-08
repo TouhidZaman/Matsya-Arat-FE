@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { EditOutlined, PlusSquareOutlined } from "@ant-design/icons";
 import { Button, Col, Row, Table, Tooltip } from "antd";
+
 import UpdateCustomerModal from "./UpdateCustomerModal";
 
 function CustomersTable({
