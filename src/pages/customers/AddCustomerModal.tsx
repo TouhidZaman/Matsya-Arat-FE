@@ -6,13 +6,12 @@ import CustomerForm from "./CustomerForm";
 import classes from "./SharedStyles.module.css";
 import { useCreateCustomerMutation } from "../../features/customer/customersAPI";
 
-function AddCustomerModal({
-  modalVisible,
-  setModalVisible,
-}: {
+interface ACMProps {
   modalVisible: boolean;
   setModalVisible: (value: boolean) => void;
-}) {
+}
+
+function AddCustomerModal({ modalVisible, setModalVisible }: ACMProps) {
   const [form] = Form.useForm();
   const [addCustomer, { isSuccess, isError }] = useCreateCustomerMutation();
 

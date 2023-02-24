@@ -4,6 +4,7 @@ import { EditOutlined, PlusSquareOutlined } from "@ant-design/icons";
 import { Button, Col, Row, Table, Tooltip } from "antd";
 
 import UpdateCustomerModal from "./UpdateCustomerModal";
+import SaleInvoicePopup from "../../components/saleInvoice/SaleInvoicePopup";
 
 function CustomersTable({
   customers,
@@ -14,6 +15,13 @@ function CustomersTable({
 }) {
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [customerInfo, setCustomerInfo] = useState(null);
+  const [saleModalVisible, setSaleModalVisible] = useState(false);
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
+
+  const handleNewSaleOpen = (customer: any) => {
+    setSelectedCustomer(customer);
+    setSaleModalVisible(true);
+  };
 
   const shoEditModal = (customer: any) => {
     setCustomerInfo(customer);
@@ -46,7 +54,7 @@ function CustomersTable({
         <Row justify="center">
           <Col>
             <Tooltip title="New Sale">
-              <Button type="text">
+              <Button type="text" onClick={() => handleNewSaleOpen(customer)}>
                 <PlusSquareOutlined />
               </Button>
             </Tooltip>
@@ -81,6 +89,13 @@ function CustomersTable({
           modalVisible={editModalVisible}
           setModalVisible={setEditModalVisible}
           customerInfo={customerInfo}
+        />
+      ) : null}
+      {saleModalVisible ? (
+        <SaleInvoicePopup
+          modalVisible={saleModalVisible}
+          setModalVisible={setSaleModalVisible}
+          customerViaProp={selectedCustomer}
         />
       ) : null}
     </>

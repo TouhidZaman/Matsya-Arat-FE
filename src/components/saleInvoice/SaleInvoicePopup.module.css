@@ -1,0 +1,59 @@
+.modalBody {
+  min-height: 300px;
+  padding: 20px 40px;
+}
+
+.title {
+  margin: 0px;
+}
+
+.dropdownContainer {
+  margin: 10px 0px;
+}
+
+.notes {
+  margin-top: 15px;
+}
+
+.notes input {
+  padding: 0px 10px !important;
+  width: 600px;
+}
+
+.liteItemsTable {
+  margin: 20px 0px;
+}
+
+.primaryButton {
+  background: white !important;
+  width: 180px;
+}
+
+.primaryButton.activeStyle,
+.primaryButton:hover {
+  color: white !important;
+  background: #1890ff !important;
+}
+
+.actionButton,
+.actionDropdown {
+  width: 140px;
+  border-top: 2px solid #1890ff;
+  border-bottom: 2px solid #1890ff;
+}
+
+.actionDropdown {
+  width: 190px;
+}
+
+.actionButtons {
+  margin-top: 20px;
+  padding: 0px 40px 20px;
+}
+
+.saveButton {
+  width: 100px;
+  border-top: 2px solid #1890ff;
+  border-bottom: 2px solid #1890ff;
+  margin-left: 10px;
+}

@@ -1,0 +1,9 @@
+.selectInputField div {
+  height: 40px !important;
+  border-radius: 6px !important;
+}
+
+.selectInputField span {
+  display: flex !important;
+  align-items: center !important;
+}

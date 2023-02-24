@@ -1,0 +1,6 @@
+.numberInputField {
+  height: 40px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+}
