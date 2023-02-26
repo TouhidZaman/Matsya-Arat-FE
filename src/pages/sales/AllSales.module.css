@@ -9,11 +9,6 @@
   border-radius: 10px;
   padding: 0 8px !important;
 }
-.subActions > span {
-  width: 300px;
-  border-radius: 10px;
-  padding: 0 8px !important;
-}
 .addButton {
   background-color: white;
   color: #3168eb;

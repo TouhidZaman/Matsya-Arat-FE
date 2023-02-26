@@ -1,6 +1,7 @@
-import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
-import { Button, Input, Row } from "antd";
 import { useState } from "react";
+import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
+import { Button, Checkbox, Input, Row } from "antd";
+import type { CheckboxChangeEvent } from "antd/es/checkbox";
 import { useGetBuyerCustomersQuery } from "../../features/customer/customersAPI";
 import AddCustomerModal from "../../components/customers/AddCustomerModal";
 
@@ -11,6 +12,7 @@ function AllBuyers() {
   const { data: buyers = [], isLoading } = useGetBuyerCustomersQuery(true); //need to adjust this
   const [modalVisible, setModalVisible] = useState(false);
   const [search, setSearch] = useState("");
+  const [dueSort, setDueSort] = useState(false);
   let filteredBuyers = [];
 
   //Applying search filtering
@@ -27,9 +29,13 @@ function AllBuyers() {
     filteredBuyers = buyers;
   }
 
+  console.log(dueSort, "due sort");
+
+  const handleChecked = (e: CheckboxChangeEvent) => setDueSort(e.target.checked);
+
   return (
     <section className={classes.customers}>
-      <Row justify={"space-between"} className={classes.actions}>
+      <Row justify={"space-between"} align="middle" className={classes.actions}>
         <Button
           className={classes.addButton}
           type="primary"
@@ -38,11 +44,17 @@ function AllBuyers() {
         >
           New Buyer
         </Button>
-        <Input
-          placeholder="Search Buyer"
-          prefix={<SearchOutlined />}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+        <Row justify="end" align="middle" className={classes.subActions}>
+          <Input
+            placeholder="Search Buyer"
+            prefix={<SearchOutlined />}
+            onChange={(e) => setSearch(e.target.value)}
+            style={{ marginRight: "15px" }}
+          />
+          <Checkbox onChange={handleChecked} style={{ fontWeight: "bolder" }}>
+            Sort by Due
+          </Checkbox>
+        </Row>
       </Row>
       <BuyersTable customers={filteredBuyers} loading={isLoading} />
       {modalVisible && (

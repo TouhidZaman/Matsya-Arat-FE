@@ -13,6 +13,7 @@ import {
 } from "../../features/customer/customersAPI";
 import getColumnTotal from "../../utils/getTotal";
 import { useCreateNewSaleMutation } from "../../features/saleInvoice/saleInvoicesAPI";
+import { getFormattedDate } from "../../utils/formatDate";
 
 type SIPProps = any;
 
@@ -134,7 +135,7 @@ function SaleInvoicePopup({
               <h2>Add New Sale</h2>
             </Col>
             <Col>
-              <h2>{`Date: ${saleDate.toLocaleDateString()}`}</h2>
+              <h2>{`Date: ${getFormattedDate(saleDate)}`}</h2>
             </Col>
           </Row>
           <Row justify="space-between">

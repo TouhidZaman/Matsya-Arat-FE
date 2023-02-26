@@ -48,6 +48,8 @@ function SideNav() {
     ["dashboard", "Dashboard", "home"],
     ["buyers", "Buyers", "groups"],
     ["sellers", "Sellers", "groups"],
+    ["all-sales", "All Sales", "paid"],
+    ["invoices", "Invoices", "receipt_long"],
     ["Account Pages"],
     ["settings", "Settings", "settings"],
   ];

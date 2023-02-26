@@ -17,4 +17,4 @@ const saleInvoicesAPI = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useCreateNewSaleMutation } = saleInvoicesAPI;
+export const { useCreateNewSaleMutation, useGetSalesQuery } = saleInvoicesAPI;

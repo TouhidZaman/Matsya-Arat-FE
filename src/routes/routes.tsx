@@ -6,6 +6,7 @@ import NotFound from "../components/NotFound";
 import PrivateRoute from "../utils/PrivateRoute";
 import AllBuyers from "../pages/buyers/AllBuyers";
 import AllSellers from "../pages/sellers/AllSellers";
+import AllSales from "../pages/sales/AllSales";
 
 const routes = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const routes = createBrowserRouter([
       {
         path: "/sellers",
         element: <AllSellers />,
+      },
+      {
+        path: "/all-sales",
+        element: <AllSales />,
       },
       {
         path: "*",

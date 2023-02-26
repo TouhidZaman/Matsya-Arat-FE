@@ -1,5 +1,5 @@
 import React from "react";
-import { formatBangladeshiCurrency } from "src/utils/formatNumber";
+import { formatBangladeshiCurrency } from "../utils/formatNumber";
 
 type DLIProps = { lineItems: any };
 
@@ -8,9 +8,9 @@ function DisplayLineItems({ lineItems }: DLIProps) {
     <div>
       {lineItems.map((item: any) => (
         <p key={item.id}>
-          {`${item.product_name} * ${formatBangladeshiCurrency(item.rate)} * ${
+          {`${item.sellerName}: ${formatBangladeshiCurrency(item.rate)} * ${
             item.quantity
-          } Litres = ${formatBangladeshiCurrency(item.subtotal)}`}
+          } Kg = ${formatBangladeshiCurrency(item.subtotal)}`}
         </p>
       ))}
     </div>

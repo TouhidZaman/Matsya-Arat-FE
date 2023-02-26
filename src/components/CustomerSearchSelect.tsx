@@ -37,6 +37,7 @@ function CustomerSearchSelect({
       {customerModalVisible && (
         <AddCustomerModal
           modalVisible={customerModalVisible}
+          customerType={"buyer"}
           setModalVisible={setCustomerModalVisible}
           // handleCustomerCreated={handleVehicleCreated}
         />
