@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Space } from "antd";
 import SearchableSelectField from "./SearchableSelectField";
-import AddCustomerModal from "../pages/customers/AddCustomerModal";
+import AddCustomerModal from "./customers/AddCustomerModal";
 
 type CSSProps = any;
 

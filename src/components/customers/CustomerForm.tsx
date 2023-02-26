@@ -42,13 +42,13 @@ function CustomerForm({
         <Input />
       </Form.Item>
 
-      <Form.Item
+      {/* <Form.Item
         label="Type of Customer"
         name="type"
         rules={[
           {
             required: true,
-            message: "Please Chose type of company",
+            message: "Please Chose type of customer",
           },
         ]}
       >
@@ -56,7 +56,7 @@ function CustomerForm({
           <Select.Option value="buyer">Buyer</Select.Option>
           <Select.Option value="seller">Seller</Select.Option>
         </Select>
-      </Form.Item>
+      </Form.Item> */}
 
       <Form.Item
         label="Contact Number"
@@ -104,7 +104,11 @@ function CustomerForm({
           <Button ghost type="primary" onClick={() => onCancel()}>
             Cancel
           </Button>
-          <Button type="primary" htmlType="submit">
+          <Button
+            type="primary"
+            style={{ textTransform: "capitalize" }}
+            htmlType="submit"
+          >
             {submitButtonText}
           </Button>
         </div>

@@ -8,10 +8,15 @@ import { useCreateCustomerMutation } from "../../features/customer/customersAPI"
 
 interface ACMProps {
   modalVisible: boolean;
+  customerType: string;
   setModalVisible: (value: boolean) => void;
 }
 
-function AddCustomerModal({ modalVisible, setModalVisible }: ACMProps) {
+function AddCustomerModal({
+  modalVisible,
+  customerType,
+  setModalVisible,
+}: ACMProps) {
   const [form] = Form.useForm();
   const [addCustomer, { isSuccess, isError }] = useCreateCustomerMutation();
 
@@ -24,7 +29,13 @@ function AddCustomerModal({ modalVisible, setModalVisible }: ACMProps) {
     }
   }, [isSuccess, isError]);
 
-  const handleAddCustomer = (customer: any) => addCustomer(customer);
+  const handleAddCustomer = (customer: any) => {
+    if (customerType === "buyer") {
+      addCustomer({ ...customer, dueAmount: 0, type: customerType });
+    } else {
+      addCustomer({ ...customer, type: customerType });
+    }
+  };
 
   const handleCancel = () => {
     form.resetFields();
@@ -40,11 +51,11 @@ function AddCustomerModal({ modalVisible, setModalVisible }: ACMProps) {
       width={700}
     >
       <div>
-        <h2 className={classes.hoverTitle}>Add New Customer</h2>
+        <h2 className={classes.hoverTitle}>Add New {customerType}</h2>
         <CustomerForm
           form={form}
           onFinish={handleAddCustomer}
-          submitButtonText="Save Customer"
+          submitButtonText={`Save ${customerType}`}
           onCancel={handleCancel}
         />
       </div>

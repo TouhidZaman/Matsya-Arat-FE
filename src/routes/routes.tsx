@@ -4,7 +4,8 @@ import Login from "../pages/Login";
 import Dashboard from "../pages/Dashboard";
 import NotFound from "../components/NotFound";
 import PrivateRoute from "../utils/PrivateRoute";
-import AllCustomers from "../pages/customers/AllCustomers";
+import AllBuyers from "../pages/buyers/AllBuyers";
+import AllSellers from "../pages/sellers/AllSellers";
 
 const routes = createBrowserRouter([
   {
@@ -24,8 +25,12 @@ const routes = createBrowserRouter([
         element: <Dashboard />,
       },
       {
-        path: "/customers",
-        element: <AllCustomers />,
+        path: "/buyers",
+        element: <AllBuyers />,
+      },
+      {
+        path: "/sellers",
+        element: <AllSellers />,
       },
       {
         path: "*",

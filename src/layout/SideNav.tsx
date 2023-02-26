@@ -46,7 +46,8 @@ function SideNav() {
   // ['Url','Title','icon(based on google  icons']
   const sidebarNavigationPath = [
     ["dashboard", "Dashboard", "home"],
-    ["customers", "Customers", "groups"],
+    ["buyers", "Buyers", "groups"],
+    ["sellers", "Sellers", "groups"],
     ["Account Pages"],
     ["settings", "Settings", "settings"],
   ];

@@ -3,16 +3,11 @@ import { Link } from "react-router-dom";
 import { EditOutlined, PlusSquareOutlined } from "@ant-design/icons";
 import { Button, Col, Row, Table, Tooltip } from "antd";
 
-import UpdateCustomerModal from "./UpdateCustomerModal";
+import UpdateCustomerModal from "../../components/customers/UpdateCustomerModal";
 import SaleInvoicePopup from "../../components/saleInvoice/SaleInvoicePopup";
+import { formatBangladeshiCurrency } from "../../utils/formatNumber";
 
-function CustomersTable({
-  customers,
-  loading,
-}: {
-  customers: [];
-  loading: boolean;
-}) {
+function BuyersTable({ customers, loading }: { customers: []; loading: boolean }) {
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [customerInfo, setCustomerInfo] = useState(null);
   const [saleModalVisible, setSaleModalVisible] = useState(false);
@@ -32,7 +27,7 @@ function CustomersTable({
     {
       title: "Customer Name",
       render: (customer: any) => (
-        <Link to={`/customers/${customer._id}`}>{customer.name}</Link>
+        <Link to={`/buyers/${customer._id}`}>{customer.name}</Link>
       ),
     },
     {
@@ -44,6 +39,11 @@ function CustomersTable({
       dataIndex: "type",
     },
     {
+      title: "Due Amount",
+      dataIndex: "dueAmount",
+      render: (dueAmount: any) => formatBangladeshiCurrency(dueAmount),
+    },
+    {
       title: "Address",
       dataIndex: "address",
     },
@@ -51,7 +51,7 @@ function CustomersTable({
       title: "Shortcuts",
       //   className: classes.excludeMeFromPrint,
       render: (_: any, customer: any) => (
-        <Row justify="center">
+        <Row justify="start">
           <Col>
             <Tooltip title="New Sale">
               <Button type="text" onClick={() => handleNewSaleOpen(customer)}>
@@ -102,4 +102,4 @@ function CustomersTable({
   );
 }
 
-export default CustomersTable;
+export default BuyersTable;

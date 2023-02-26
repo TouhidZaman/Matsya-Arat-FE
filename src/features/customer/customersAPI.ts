@@ -8,7 +8,7 @@ const customersAPI = apiSlice.injectEndpoints({
         method: "POST",
         body: customer,
       }),
-      invalidatesTags: ["customers"],
+      invalidatesTags: ["buyers", "sellers"],
     }),
     updateCustomer: builder.mutation({
       query: ({ updatedCustomer, customerId }) => ({
@@ -16,17 +16,22 @@ const customersAPI = apiSlice.injectEndpoints({
         method: "PATCH",
         body: updatedCustomer,
       }),
-      invalidatesTags: ["customers"],
+      invalidatesTags: ["buyers", "sellers"],
     }),
-    getCustomers: builder.query({
-      query: () => `customers`,
-      providesTags: ["customers"],
+    getBuyerCustomers: builder.query({
+      query: () => `customers?type=buyer`,
+      providesTags: ["buyers"],
+    }),
+    getSellerCustomers: builder.query({
+      query: () => `customers?type=seller`,
+      providesTags: ["sellers"],
     }),
   }),
 });
 
 export const {
   useCreateCustomerMutation,
-  useGetCustomersQuery,
   useUpdateCustomerMutation,
+  useGetBuyerCustomersQuery,
+  useGetSellerCustomersQuery,
 } = customersAPI;

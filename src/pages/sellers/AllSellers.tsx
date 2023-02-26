@@ -1,22 +1,22 @@
 import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
 import { Button, Input, Row } from "antd";
 import { useState } from "react";
-import { useGetCustomersQuery } from "../../features/customer/customersAPI";
-import AddCustomerModal from "./AddCustomerModal";
+import { useGetSellerCustomersQuery } from "../../features/customer/customersAPI";
+import AddCustomerModal from "../../components/customers/AddCustomerModal";
 
 import classes from "./Customers.module.css";
-import CustomersTable from "./CustomersTable";
+import CustomersTable from "./SellersTable";
 
-function AllCustomers() {
-  const { data: customers = [], isLoading } = useGetCustomersQuery(true); //need to adjust this
+function AllSellers() {
+  const { data: sellers = [], isLoading } = useGetSellerCustomersQuery(true); //need to adjust this
   const [modalVisible, setModalVisible] = useState(false);
   const [search, setSearch] = useState("");
-  let filteredCustomers = [];
+  let filteredSellers = [];
 
   //Applying search filtering
   if (search) {
     let keywordsArray = search.split(" ");
-    filteredCustomers = customers.filter((customer: any) =>
+    filteredSellers = sellers.filter((customer: any) =>
       keywordsArray.some(
         (keyword) =>
           customer.name?.toLowerCase().includes(keyword.toLowerCase()) ||
@@ -24,7 +24,7 @@ function AllCustomers() {
       )
     );
   } else {
-    filteredCustomers = customers;
+    filteredSellers = sellers;
   }
 
   return (
@@ -36,18 +36,19 @@ function AllCustomers() {
           icon={<PlusOutlined style={{ color: "black" }} />}
           onClick={() => setModalVisible(true)}
         >
-          New Customer
+          New Seller
         </Button>
         <Input
-          placeholder="Search Customer"
+          placeholder="Search Seller"
           prefix={<SearchOutlined />}
           onChange={(e) => setSearch(e.target.value)}
         />
       </Row>
-      <CustomersTable customers={filteredCustomers} loading={isLoading} />
+      <CustomersTable customers={filteredSellers} loading={isLoading} />
       {modalVisible && (
         <AddCustomerModal
           modalVisible={modalVisible}
+          customerType="seller"
           setModalVisible={setModalVisible}
         />
       )}
@@ -55,4 +56,4 @@ function AllCustomers() {
   );
 }
 
-export default AllCustomers;
+export default AllSellers;

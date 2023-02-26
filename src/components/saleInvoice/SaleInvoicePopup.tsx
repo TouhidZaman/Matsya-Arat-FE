@@ -7,8 +7,12 @@ import classes from "./SaleInvoicePopup.module.css";
 import LineItemsTable from "./LineItemsTable";
 import { toast } from "react-hot-toast";
 import CustomerSearchSelect from "../CustomerSearchSelect";
-import { useGetCustomersQuery } from "../../features/customer/customersAPI";
+import {
+  useGetBuyerCustomersQuery,
+  useGetSellerCustomersQuery,
+} from "../../features/customer/customersAPI";
 import getColumnTotal from "../../utils/getTotal";
+import { useCreateNewSaleMutation } from "../../features/saleInvoice/saleInvoicesAPI";
 
 type SIPProps = any;
 
@@ -18,8 +22,11 @@ function SaleInvoicePopup({
   customerViaProp,
 }: SIPProps) {
   const saleDate = new Date();
-  const { data: customers = [], isLoading: customerLoading } =
-    useGetCustomersQuery(true); //need to adjust this
+  const { data: buyers = [], isLoading: buyersLoading } =
+    useGetBuyerCustomersQuery(true); //need to adjust this
+
+  const { data: sellers = [], isLoading: sellersLoading } =
+    useGetSellerCustomersQuery(true); //need to adjust this
 
   const [autoSelect, setAutoSelect] = useState(true);
 
@@ -27,6 +34,15 @@ function SaleInvoicePopup({
   const [lineItems, setLineItems] = useState([{ id: Date.now(), subtotal: 0 }]);
   const [payment, setPayment] = useState(0);
   const [printEnabled, setPrintEnabled] = useState(false);
+  const [addNewSale, { isSuccess, isError }] = useCreateNewSaleMutation();
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Sale added successfully");
+    } else if (isError) {
+      toast.error("Failed to add sale");
+    }
+  }, [isSuccess, isError]);
 
   const refetch = () => {};
 
@@ -40,16 +56,16 @@ function SaleInvoicePopup({
 
   useEffect(() => {
     if (
-      extractedPath.length > 2 &&
-      extractedPath[1] === "customers" &&
+      extractedPath.length >= 2 &&
+      extractedPath[1] === "buyers" &&
       autoSelect &&
-      !customerLoading
+      !buyersLoading
     ) {
       const customerId = +extractedPath[2];
-      const customer = customers.find((c: any) => c._id === customerId);
+      const customer = buyers.find((c: any) => c._id === customerId);
       handleCustomerChange(customer);
     }
-  }, [customers]);
+  }, [buyers]);
 
   useEffect(() => {
     if (customerViaProp?._id) {
@@ -87,7 +103,7 @@ function SaleInvoicePopup({
 
     const isValid = validate(); // validating invoice data
     if (isValid) {
-      const transactionData = {
+      const newSale = {
         buyerId: selectedCustomer._id,
         buyerName: selectedCustomer.name,
         lineItems,
@@ -97,7 +113,8 @@ function SaleInvoicePopup({
         paid: payment,
         date: saleDate,
       };
-      console.log(transactionData, "hhh");
+      console.log(newSale, "hhh");
+      addNewSale(newSale);
     }
   };
 
@@ -124,10 +141,10 @@ function SaleInvoicePopup({
             <Col>
               <div className={classes.dropdownContainer}>
                 <CustomerSearchSelect
-                  customers={customers}
+                  customers={buyers}
                   handleCustomerChange={handleCustomerChange}
                   selectedCustomer={selectedCustomer}
-                  customerLoading={customerLoading}
+                  buyersLoading={buyersLoading}
                   refetch={refetch}
                   setAutoSelect={setAutoSelect}
                 />
@@ -149,8 +166,8 @@ function SaleInvoicePopup({
           <div className={classes.liteItemsTable}>
             <LineItemsTable
               lineItems={lineItems}
-              sellers={customers}
-              loading={customerLoading}
+              sellers={sellers}
+              loading={sellersLoading}
               setLineItems={setLineItems}
               selectedCustomer={selectedCustomer}
               payment={payment}
