@@ -1,7 +1,8 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import { format } from "date-fns";
-import { Row, Col, Breadcrumb, Button, Typography } from "antd";
+import React, { useCallback, useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { Row, Col, Breadcrumb, Button } from "antd";
+import { useGetCustomerByIdQuery } from "../features/customer/customersAPI";
+import SaleInvoicePopup from "../components/saleInvoice/SaleInvoicePopup";
 
 const toggler = [
   <svg
@@ -16,28 +17,37 @@ const toggler = [
 ];
 
 function Header({ subName, onPress }: { subName: string; onPress: () => void }) {
-  const navigate = useNavigate();
-  const firstDevider = subName.indexOf("/");
-
-  const reverseSubname = [...subName].reverse().join("");
-  const routeTitle = [...reverseSubname.slice(0, reverseSubname.indexOf("/") + 1)]
-    .reverse()
-    .join("")
-    .replace("/", "");
-  let routeTitleBread = "";
-  if (routeTitle) {
-    routeTitleBread = ` / ${routeTitle}`;
-  }
-  let newSubName = "";
-  if (firstDevider > 0) {
-    newSubName = `${subName.slice(0, firstDevider)}  ${routeTitleBread}`;
+  const [modalVisible, setModalVisible] = useState(false);
+  const pathArray = subName.split("/");
+  const { data: customer = {}, isLoading } = useGetCustomerByIdQuery(pathArray[1], {
+    skip: !pathArray[1],
+  });
+  let firstPath = pathArray[0];
+  let pageTitle = "";
+  if (pathArray.length >= 2) {
+    pageTitle = customer?.name;
   } else {
-    newSubName = subName.replace("/", "");
+    pageTitle = pathArray[0];
   }
-
-  const { Title } = Typography;
 
   useEffect(() => window.scrollTo(0, 0));
+
+  // Trigger new invoice modal based on keyPress
+  const handleKeyPress = useCallback((event: any) => {
+    if (event.altKey === true && (event.key === "n" || event.key === "N")) {
+      setModalVisible(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    // attach the event listener
+    document.addEventListener("keydown", handleKeyPress);
+
+    // remove the event listener
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [handleKeyPress]);
 
   return (
     <>
@@ -48,7 +58,7 @@ function Header({ subName, onPress }: { subName: string; onPress: () => void }) 
               <NavLink to="/">Pages</NavLink>
             </Breadcrumb.Item>
             <Breadcrumb.Separator>
-              <Breadcrumb.Item>{`/ ${newSubName}`}</Breadcrumb.Item>
+              <Breadcrumb.Item>{`/ ${firstPath} /`}</Breadcrumb.Item>
             </Breadcrumb.Separator>
           </Breadcrumb>
           <div className="ant-page-header-heading">
@@ -56,12 +66,12 @@ function Header({ subName, onPress }: { subName: string; onPress: () => void }) 
               className="ant-page-header-heading-title"
               style={{ textTransform: "capitalize" }}
             >
-              {routeTitle || subName.replace("/", "")}
+              {pageTitle}
             </span>
           </div>
         </Col>
         <Col span={24} md={18} className="header-control">
-          <Button className="">
+          <Button className="" onClick={() => setModalVisible(true)}>
             <div className="buttonAlignment">
               <span className="material-symbols-rounded navBarNavigationIcon">
                 add
@@ -69,12 +79,17 @@ function Header({ subName, onPress }: { subName: string; onPress: () => void }) 
               New Sale
             </div>
           </Button>
-
           <Button type="link" className="sidebar-toggler" onClick={() => onPress()}>
             {toggler}
           </Button>
         </Col>
       </Row>
+      {modalVisible ? (
+        <SaleInvoicePopup
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+        />
+      ) : null}
     </>
   );
 }

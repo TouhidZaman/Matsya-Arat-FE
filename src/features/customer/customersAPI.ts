@@ -26,6 +26,10 @@ const customersAPI = apiSlice.injectEndpoints({
       query: () => `customers?type=seller`,
       providesTags: ["sellers"],
     }),
+    getCustomerById: builder.query({
+      query: (customerId: string) => `customers/${customerId}`,
+      providesTags: ["customer"],
+    }),
   }),
 });
 
@@ -34,4 +38,5 @@ export const {
   useUpdateCustomerMutation,
   useGetBuyerCustomersQuery,
   useGetSellerCustomersQuery,
+  useGetCustomerByIdQuery,
 } = customersAPI;

@@ -14,6 +14,7 @@ import {
 import getColumnTotal from "../../utils/getTotal";
 import { useCreateNewSaleMutation } from "../../features/saleInvoice/saleInvoicesAPI";
 import { getFormattedDate } from "../../utils/formatDate";
+import { format } from "date-fns";
 
 type SIPProps = any;
 
@@ -40,6 +41,7 @@ function SaleInvoicePopup({
   useEffect(() => {
     if (isSuccess) {
       toast.success("Sale added successfully");
+      setModalVisible(false);
     } else if (isError) {
       toast.error("Failed to add sale");
     }
@@ -50,7 +52,6 @@ function SaleInvoicePopup({
   const location = useLocation();
   const path = location.pathname;
   const extractedPath = path.split("/");
-
   const handleCustomerChange = (customer: any) => {
     setSelectedCustomer(customer);
   };
@@ -62,7 +63,7 @@ function SaleInvoicePopup({
       autoSelect &&
       !buyersLoading
     ) {
-      const customerId = +extractedPath[2];
+      const customerId = extractedPath[2];
       const customer = buyers.find((c: any) => c._id === customerId);
       handleCustomerChange(customer);
     }
@@ -100,8 +101,6 @@ function SaleInvoicePopup({
   };
 
   const handleNewSale = () => {
-    console.log("before validation");
-
     const isValid = validate(); // validating invoice data
     if (isValid) {
       const newSale = {
@@ -112,9 +111,9 @@ function SaleInvoicePopup({
         totalWithDue:
           getColumnTotal(lineItems, "subtotal") + selectedCustomer?.dueAmount,
         paid: payment,
-        date: saleDate,
+        date: format(saleDate, "yyyy-MM-dd"),
+        createdAt: saleDate,
       };
-      console.log(newSale, "hhh");
       addNewSale(newSale);
     }
   };

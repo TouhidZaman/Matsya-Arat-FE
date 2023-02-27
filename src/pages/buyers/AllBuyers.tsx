@@ -29,8 +29,6 @@ function AllBuyers() {
     filteredBuyers = buyers;
   }
 
-  console.log(dueSort, "due sort");
-
   const handleChecked = (e: CheckboxChangeEvent) => setDueSort(e.target.checked);
 
   return (

@@ -3,6 +3,7 @@ import { getFormattedDate } from "../../utils/formatDate";
 import { formatBangladeshiCurrency } from "../../utils/formatNumber";
 import DisplayLineItems from "../../components/DisplayLineItems";
 import classes from "./SaleInvoiceTable.module.css";
+import { Link } from "react-router-dom";
 
 type SITProps = any;
 
@@ -15,7 +16,9 @@ function SaleInvoiceTable({ sales, loading }: SITProps) {
     },
     {
       title: "Buyer Name",
-      dataIndex: "buyerName",
+      render: (buyer: any) => (
+        <Link to={`/buyers/${buyer.buyerId}`}>{buyer.buyerName}</Link>
+      ),
     },
     {
       title: "Previous Due",

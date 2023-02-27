@@ -18,7 +18,7 @@ function SellersTable({ customers, loading }: { customers: []; loading: boolean 
     {
       title: "Customer Name",
       render: (customer: any) => (
-        <Link to={`/customers/${customer._id}`}>{customer.name}</Link>
+        <Link to={`/sellers/${customer._id}`}>{customer.name}</Link>
       ),
     },
     {

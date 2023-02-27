@@ -8,13 +8,21 @@ const saleInvoicesAPI = apiSlice.injectEndpoints({
         method: "POST",
         body: newSale,
       }),
-      invalidatesTags: ["sales", "customers"],
+      invalidatesTags: ["sales", "buyers"],
     }),
     getSales: builder.query({
       query: () => `sales`,
       providesTags: ["sales"],
     }),
+    getSalesBySellerId: builder.query({
+      query: (sellerId) => `/sales/seller/${sellerId}`,
+      providesTags: ["salesBySellerId"],
+    }),
   }),
 });
 
-export const { useCreateNewSaleMutation, useGetSalesQuery } = saleInvoicesAPI;
+export const {
+  useCreateNewSaleMutation,
+  useGetSalesQuery,
+  useGetSalesBySellerIdQuery,
+} = saleInvoicesAPI;
