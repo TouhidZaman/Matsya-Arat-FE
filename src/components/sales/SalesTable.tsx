@@ -1,13 +1,17 @@
 import { Table } from "antd";
 import { getFormattedDate } from "../../utils/formatDate";
 import { formatBangladeshiCurrency } from "../../utils/formatNumber";
-import DisplayLineItems from "../../components/DisplayLineItems";
-import classes from "./SaleInvoiceTable.module.css";
+import DisplayLineItems from "../DisplayLineItems";
+import classes from "./SalesTable.module.css";
 import { Link } from "react-router-dom";
 
-type SITProps = any;
+type SITProps = {
+  sales: any[];
+  loading: boolean;
+  title: string;
+};
 
-function SaleInvoiceTable({ sales, loading }: SITProps) {
+function SalesTable({ sales, loading, title }: SITProps) {
   const columns = [
     {
       title: "Date",
@@ -42,7 +46,11 @@ function SaleInvoiceTable({ sales, loading }: SITProps) {
     },
   ];
 
-  const displayTitle = () => <h3 style={{ margin: "0px" }}>All Sales of Buyers</h3>;
+  const displayTitle = () => (
+    <div className={classes.displayTitle}>
+      <h3>{title}</h3>
+    </div>
+  );
 
   return (
     <>
@@ -60,4 +68,4 @@ function SaleInvoiceTable({ sales, loading }: SITProps) {
   );
 }
 
-export default SaleInvoiceTable;
+export default SalesTable;

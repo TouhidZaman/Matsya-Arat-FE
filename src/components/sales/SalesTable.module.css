@@ -1,0 +1,14 @@
+.marginTop {
+  margin-top: 20px;
+}
+.linkButton {
+  padding: 0;
+}
+.displayTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.displayTitle h3 {
+  margin: 0px;
+}

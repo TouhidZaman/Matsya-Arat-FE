@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Input, Row, DatePicker } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import classes from "./AllSales.module.css";
-import SaleInvoiceTable from "./SaleInvoiceTable";
-import { useGetSalesQuery } from "../../features/saleInvoice/saleInvoicesAPI";
+import classes from "./Sales.module.css";
 import { getFormattedDate } from "../../utils/formatDate";
 import type { DatePickerProps } from "antd";
+import SalesTable from "./SalesTable";
 
-const AllSales = () => {
-  const { data: sales = [], isLoading } = useGetSalesQuery(true);
+type BSProps = {
+  sales: any[];
+  isLoading: boolean;
+  title: string;
+};
+
+const Sales = ({ sales, isLoading, title }: BSProps) => {
   const [search, setSearch] = useState("");
   const [dateWiseSales, setDateWiseSales] = useState(sales);
   let searchFilteredSales = [];
@@ -60,9 +64,9 @@ const AllSales = () => {
         />
         <DatePicker size="small" onChange={handleDateChange} format={"DD/MM/YYYY"} />
       </Row>
-      <SaleInvoiceTable sales={searchFilteredSales} loading={isLoading} />
+      <SalesTable sales={searchFilteredSales} loading={isLoading} title={title} />
     </section>
   );
 };
 
-export default AllSales;
+export default Sales;

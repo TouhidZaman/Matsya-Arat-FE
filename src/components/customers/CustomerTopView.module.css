@@ -1,0 +1,41 @@
+
+.backButton,
+.title {
+  font-size: 1.5rem;
+}
+
+.backButton:hover {
+  color: #1890ff;
+}
+
+.customBadge {
+  background-color: #1890ff;
+  color: white;
+  padding: 0px 10px;
+  border-radius: 5px;
+  text-transform: capitalize;
+}
+
+.dueAmount {
+  font-weight: 600;
+}
+.actionButton {
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  border: 2px solid #1890ff;
+  background-color: unset;
+  margin-bottom: 0px;
+  padding-bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  color: #1890ff;
+  cursor: pointer;
+}
+
+.actionButton:hover {
+  background-color: #1890ff;
+  color: white;
+}

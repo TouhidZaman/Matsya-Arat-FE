@@ -1,0 +1,35 @@
+.pageHeader,
+.printTitle {
+  display: none;
+}
+
+@media print {
+  @page {
+    /* size: landscape; */
+    size: portrait;
+    margin: 10px;
+  }
+  .page {
+    padding: 20px;
+  }
+  .printTitle {
+    display: block;
+    font-size: 24px;
+    margin: 10px 15px;
+  }
+  .pageHeader {
+    display: block;
+    width: 100%;
+    height: 200px;
+    padding:  0px 10px 2px;
+    box-sizing: border-box;
+  }
+  .pageHeader img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .excludeMeFromPrint {
+    display: none;
+  }
+}

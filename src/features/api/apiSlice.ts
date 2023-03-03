@@ -15,6 +15,7 @@ export const apiSlice = createApi({
     "sellers",
     "salesBySellerId",
     "customer",
+    "salesByBuyerId",
   ],
   endpoints: () => ({}),
 });

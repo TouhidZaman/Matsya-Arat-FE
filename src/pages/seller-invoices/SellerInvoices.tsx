@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { Input, Row, DatePicker } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
+import type { DatePickerProps } from "antd";
+
 import classes from "./SellerInvoices.module.css";
 import SellerInvoiceTable from "./SellerInvoiceTable";
-import {
-  useGetSalesBySellerIdQuery,
-  useGetSalesQuery,
-} from "../../features/saleInvoice/saleInvoicesAPI";
+import { useGetSalesBySellerIdQuery } from "../../features/saleInvoice/saleInvoicesAPI";
 import { getFormattedDate } from "../../utils/formatDate";
-import type { DatePickerProps } from "antd";
-import { useParams } from "react-router-dom";
+import CustomerTopView from "../../components/customers/CustomerTopView";
 
 const SellerInvoices = () => {
   const { sellerId } = useParams();
@@ -57,27 +56,34 @@ const SellerInvoices = () => {
   }
 
   return (
-    <section className={classes.customers}>
-      <Row justify={"space-between"} className={classes.actions}>
-        <Input
-          placeholder="Search sales using buyer or date"
-          prefix={<SearchOutlined />}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <DatePicker size="small" onChange={handleDateChange} format={"DD/MM/YYYY"} />
-      </Row>
-
-      {searchFilteredSales?.map((salesGroup: any, index: number) => {
-        console.log(salesGroup?.salesByDate, "salesByDate");
-        return salesGroup?.salesByDate ? (
-          <SellerInvoiceTable
-            key={index}
-            loading={isLoading}
-            salesByDate={salesGroup.salesByDate}
-            title={salesGroup._id}
+    <section className={classes.sellerView}>
+      <CustomerTopView customerType="seller" />
+      <div className={classes.customers}>
+        <Row justify={"space-between"} className={classes.actions}>
+          <Input
+            placeholder="Search sales using buyer or date"
+            prefix={<SearchOutlined />}
+            onChange={(e) => setSearch(e.target.value)}
           />
-        ) : null;
-      })}
+          <DatePicker
+            size="small"
+            onChange={handleDateChange}
+            format={"DD/MM/YYYY"}
+          />
+        </Row>
+
+        {searchFilteredSales?.map((salesGroup: any, index: number) => {
+          console.log(salesGroup?.salesByDate, "salesByDate");
+          return salesGroup?.salesByDate ? (
+            <SellerInvoiceTable
+              key={index}
+              loading={isLoading}
+              salesByDate={salesGroup.salesByDate}
+              saleDate={salesGroup._id}
+            />
+          ) : null;
+        })}
+      </div>
     </section>
   );
 };

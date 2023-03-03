@@ -18,6 +18,10 @@ const saleInvoicesAPI = apiSlice.injectEndpoints({
       query: (sellerId) => `/sales/seller/${sellerId}`,
       providesTags: ["salesBySellerId"],
     }),
+    getSalesByBuyerId: builder.query({
+      query: (buyerId) => `/sales/buyer/${buyerId}`,
+      providesTags: ["salesByBuyerId"],
+    }),
   }),
 });
 
@@ -25,4 +29,5 @@ export const {
   useCreateNewSaleMutation,
   useGetSalesQuery,
   useGetSalesBySellerIdQuery,
+  useGetSalesByBuyerIdQuery,
 } = saleInvoicesAPI;

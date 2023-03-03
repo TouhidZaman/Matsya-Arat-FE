@@ -1,3 +1,15 @@
+.displayTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.displayTitle > h3 {
+  margin: 20px 10px 5px;
+}
+.displayTitle > button {
+  font-weight: bold;
+}
+
 .marginTop {
   margin-top: 20px;
 }

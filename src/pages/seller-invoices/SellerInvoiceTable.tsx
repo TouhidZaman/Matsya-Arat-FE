@@ -1,16 +1,20 @@
-import { Table } from "antd";
+import { useState } from "react";
+import { Button, Table } from "antd";
+
 import { getFormattedDate } from "../../utils/formatDate";
-import { formatBangladeshiCurrency } from "../../utils/formatNumber";
 import DisplayLineItems from "../../components/DisplayLineItems";
 import classes from "./SellerInvoiceTable.module.css";
+import InvoiceView from "./invoice-view/InvoiceView";
 
 type SITProps = {
   salesByDate: any;
-  title: string;
+  saleDate: string;
   loading: boolean;
 };
 
-function SaleInvoiceTable({ salesByDate, title, loading }: SITProps) {
+function SaleInvoiceTable({ salesByDate, saleDate, loading }: SITProps) {
+  const [invoiceViewModalData, setInvoiceViewModalData] = useState(null);
+
   const filteredSales = salesByDate?.filter((sale: any) => sale.lineItems.length);
   if (!filteredSales.length) return null;
   const columns = [
@@ -32,9 +36,13 @@ function SaleInvoiceTable({ salesByDate, title, loading }: SITProps) {
 
   return (
     <>
-      <h3 style={{ marginBottom: "5px", marginTop: "20px", paddingLeft: "5px" }}>
-        Sales of {title}
-      </h3>
+      <div className={classes.displayTitle}>
+        <h3>Sales of {getFormattedDate(new Date(saleDate))}</h3>
+        <Button type="link" onClick={() => setInvoiceViewModalData(salesByDate)}>
+          Generate Invoice
+        </Button>
+      </div>
+
       <div>
         <Table
           {...{ loading }}
@@ -44,6 +52,12 @@ function SaleInvoiceTable({ salesByDate, title, loading }: SITProps) {
           pagination={false}
         />
       </div>
+      {invoiceViewModalData ? (
+        <InvoiceView
+          invoiceViewModalData={invoiceViewModalData}
+          setInvoiceViewModalData={setInvoiceViewModalData}
+        />
+      ) : null}
     </>
   );
 }

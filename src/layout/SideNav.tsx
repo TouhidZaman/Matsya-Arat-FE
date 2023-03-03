@@ -47,8 +47,8 @@ function SideNav() {
   const sidebarNavigationPath = [
     ["dashboard", "Dashboard", "home"],
     ["buyers", "Buyers", "groups"],
-    ["sellers", "Sellers", "receipt_long"],
     ["all-sales", "All Sales", "paid"],
+    ["sellers", "Sellers", "receipt_long"],
     ["Account Pages"],
     ["settings", "Settings", "settings"],
   ];

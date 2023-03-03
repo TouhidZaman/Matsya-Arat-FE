@@ -1,0 +1,90 @@
+.modalBody {
+  min-height: 300px;
+  padding: 0px 20px 40px; 
+}
+
+.heading {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 10px;
+  align-items: center;
+}
+
+.button {
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  border: 2px solid #1890ff;
+  background-color: unset;
+  margin-bottom: 0px;
+  padding-bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  color: #1890ff;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #1890ff;
+  color: white;
+}
+
+.invoiceBody {
+  background: #2894fa13;
+  border: 1px dashed #000000;
+  padding: 20px;
+  margin: 0 10px;
+}
+
+.spaceBetween {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.spaceBetween h2 {
+  margin: 0;
+}
+
+.title {
+  margin: 0px;
+}
+
+.dropdownContainer {
+  margin: 10px 0px;
+}
+
+.notes {
+  margin-top: 15px;
+}
+.notes .driverInfo {
+  width: 605px;
+  height: 109px;
+  background: #ffffff;
+  border: 1px solid #aaaaaa;
+  border-radius: 3px;
+  padding: 7px;
+}
+.notes input {
+  padding: 0px 10px !important;
+  width: 600px;
+}
+
+.liteItemsTable {
+  margin: 20px 0px;
+}
+
+.lineItemsTotal {
+  background-color: white;
+  padding: 10px 20px;
+  text-align: end;
+}
+
+.paidBy {
+  margin-top: 50px;
+}
+
+.paidBy p {
+  margin-left: 10px;
+}
