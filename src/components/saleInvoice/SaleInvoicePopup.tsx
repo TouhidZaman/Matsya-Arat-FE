@@ -121,7 +121,7 @@ function SaleInvoicePopup({
   return (
     <>
       <Modal
-        visible={modalVisible}
+        open={modalVisible}
         centered
         onCancel={() => setModalVisible(false)}
         bodyStyle={{ padding: "0px" }}
@@ -144,7 +144,7 @@ function SaleInvoicePopup({
                   customers={buyers}
                   handleCustomerChange={handleCustomerChange}
                   selectedCustomer={selectedCustomer}
-                  buyersLoading={buyersLoading}
+                  loading={buyersLoading}
                   refetch={refetch}
                   setAutoSelect={setAutoSelect}
                 />

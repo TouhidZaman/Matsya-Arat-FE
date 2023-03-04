@@ -24,14 +24,13 @@ function InvoiceView({ invoiceViewModalData, setInvoiceViewModalData }: IVProps)
     (sale: any) => sale.lineItems.length
   );
   if (!filteredSales.length) return null;
-  const {
-    invoice_number: invoiceNumber = 10,
-    lineItems,
-    sub_total = 0,
-    total = 0,
-  } = invoiceViewModalData;
 
-  const totalQuantity = getColumnTotal(lineItems, "quantity");
+  let subTotal = 0;
+  let totalQuantity = 0;
+  filteredSales?.forEach((element: any) => {
+    subTotal += getColumnTotal(element?.lineItems, "subtotal");
+    totalQuantity += getColumnTotal(element?.lineItems, "quantity");
+  });
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
@@ -48,9 +47,11 @@ function InvoiceView({ invoiceViewModalData, setInvoiceViewModalData }: IVProps)
       dataIndex: "buyerName",
     },
     {
-      title: "Summary",
+      title: "Buyer Purchases History",
       dataIndex: "lineItems",
-      render: (lineItems: any) => <DisplayLineItems lineItems={lineItems} />,
+      render: (lineItems: any) => (
+        <DisplayLineItems lineItems={lineItems} isSeller />
+      ),
     },
   ];
 
@@ -97,12 +98,10 @@ function InvoiceView({ invoiceViewModalData, setInvoiceViewModalData }: IVProps)
               />
               <div className={classes.lineItemsTotal}>
                 <h3>
-                  {`Sub-Total: ${formatBangladeshiCurrency(
-                    sub_total
-                  )} (${getBDFormattedNumber(totalQuantity)} L)`}
+                  {`Total Quantity: ${getBDFormattedNumber(totalQuantity)} KG`}
                 </h3>
                 <div>
-                  <h3>{`Total: ${formatBangladeshiCurrency(total)}`}</h3>
+                  <h3>{`Total Amount: ${formatBangladeshiCurrency(subTotal)}`}</h3>
                 </div>
               </div>
             </div>

@@ -3,13 +3,20 @@ import { Space } from "antd";
 import SearchableSelectField from "./SearchableSelectField";
 import AddCustomerModal from "./customers/AddCustomerModal";
 
-type CSSProps = any;
+type CSSProps = {
+  customers: any[];
+  handleCustomerChange: (c: any) => void;
+  selectedCustomer: any;
+  loading: boolean;
+  refetch: any;
+  setAutoSelect: (p: boolean) => void;
+};
 
 function CustomerSearchSelect({
   customers,
   handleCustomerChange,
   selectedCustomer,
-  customerLoading,
+  loading,
   refetch,
   setAutoSelect,
 }: CSSProps) {
@@ -32,7 +39,7 @@ function CustomerSearchSelect({
         value={selectedCustomer?._id}
         handleAddItem={() => setCustomerModalVisible(true)}
         addItemText="Add New Customer"
-        loading={customerLoading}
+        loading={loading}
       />
       {customerModalVisible && (
         <AddCustomerModal
