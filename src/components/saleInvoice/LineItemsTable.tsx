@@ -8,9 +8,20 @@ import {
   getBDFormattedNumber,
 } from "../../utils/formatNumber";
 import EditableNumberField from "../EditableNumberField";
-import getColumnTotal from "../../utils/getTotal";
 
-type LITProps = any;
+interface LITProps {
+  lineItems: any;
+  setLineItems: any;
+  loading: boolean;
+  sellers: any;
+  selectedCustomer?: any;
+  payment: number;
+  setPayment: (n: number) => void;
+  subTotal: number;
+  totalQuantity: number;
+  adjustment: number;
+  total: number;
+}
 
 function LineItemsTable({
   lineItems,
@@ -20,30 +31,28 @@ function LineItemsTable({
   selectedCustomer,
   payment,
   setPayment,
+  subTotal,
+  totalQuantity,
+  adjustment,
+  total,
 }: LITProps) {
   // Adjusting camel case key issue
   const formattedSellers = sellers.map((seller: any) => ({
     sellerId: seller._id,
     sellerName: seller.name,
-    // rate: 0,
   }));
 
   const handleSave = (lineItem: any) => {
-    console.log("line item", lineItem);
     const newLineItems = [...lineItems];
-    console.log("line items", newLineItems);
     const index = newLineItems.findIndex((item) => item.id === lineItem.id);
     const item = newLineItems[index];
 
     const newLineItem = { ...lineItem };
     if (newLineItem.quantity && newLineItem.rate) {
-      console.log("Inside quantity", newLineItem.quantity);
-      console.log("Inside quantity", newLineItem.rate);
       newLineItem.subtotal = newLineItem.rate * newLineItem.quantity;
     }
 
     newLineItems.splice(index, 1, { ...item, ...newLineItem });
-    // console.log(newLineItems, 'line items');
     setLineItems(newLineItems);
     setPayment(0); // resetting payment
   };
@@ -132,26 +141,22 @@ function LineItemsTable({
     <>
       <Row justify="end">
         <h3 style={{ margin: "0px" }}>
-          {`Total: ${formatBangladeshiCurrency(
-            getColumnTotal(lineItems, "subtotal")
-          )} (${getColumnTotal(lineItems, "quantity") || "0.00"} Kg)`}
+          {`Sub-Total: ${formatBangladeshiCurrency(subTotal)} (${totalQuantity} Kg)`}
         </h3>
       </Row>
       <Row justify="end">
         <h3 style={{ margin: "0px" }}>
-          {`Total with Due: ${formatBangladeshiCurrency(
-            getColumnTotal(lineItems, "subtotal") +
-              (selectedCustomer?.dueAmount || 0)
-          )}`}
+          {`Adjustment: ${formatBangladeshiCurrency(adjustment)}`}
+        </h3>
+      </Row>
+      <Row justify="end">
+        <h3 style={{ margin: "0px" }}>
+          {`Total with Due: ${formatBangladeshiCurrency(total)}`}
         </h3>
       </Row>
       <Row justify={"end"}>
         <h3 style={{ margin: "0px" }}>
-          {`Total Due after payment: ${formatBangladeshiCurrency(
-            getColumnTotal(lineItems, "subtotal") +
-              (selectedCustomer?.dueAmount || 0) -
-              payment
-          )}`}
+          {`Due after payment: ${formatBangladeshiCurrency(total - payment)}`}
         </h3>
       </Row>
     </>

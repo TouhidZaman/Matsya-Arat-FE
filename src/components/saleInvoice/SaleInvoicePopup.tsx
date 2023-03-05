@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Button, Checkbox, Col, Input, Modal, Row, Space } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
+import { format } from "date-fns";
 
 import classes from "./SaleInvoicePopup.module.css";
 import LineItemsTable from "./LineItemsTable";
@@ -14,7 +15,7 @@ import {
 import getColumnTotal from "../../utils/getTotal";
 import { useCreateNewSaleMutation } from "../../features/saleInvoice/saleInvoicesAPI";
 import { getFormattedDate } from "../../utils/formatDate";
-import { format } from "date-fns";
+import { getBDFormattedNumber } from "../../utils/formatNumber";
 
 type SIPProps = any;
 
@@ -37,6 +38,12 @@ function SaleInvoicePopup({
   const [payment, setPayment] = useState(0);
   const [printEnabled, setPrintEnabled] = useState(false);
   const [addNewSale, { isSuccess, isError }] = useCreateNewSaleMutation();
+
+  //Amount calculations
+  const subTotal = getColumnTotal(lineItems, "subtotal") || 0;
+  const totalQuantity = getColumnTotal(lineItems, "quantity") || 0;
+  const adjustment = totalQuantity * 2; // 2tk per kg will be added as adjustment
+  const total = subTotal + adjustment + (selectedCustomer?.dueAmount || 0);
 
   useEffect(() => {
     if (isSuccess) {
@@ -107,14 +114,17 @@ function SaleInvoicePopup({
         buyerId: selectedCustomer._id,
         buyerName: selectedCustomer.name,
         lineItems,
+        subTotal,
+        totalQuantity,
         previousDue: selectedCustomer?.dueAmount,
-        totalWithDue:
-          getColumnTotal(lineItems, "subtotal") + selectedCustomer?.dueAmount,
+        adjustment,
+        totalWithDue: total,
         paid: payment,
         date: format(saleDate, "yyyy-MM-dd"),
         createdAt: saleDate,
       };
       addNewSale(newSale);
+      // console.log(newSale, "new sale");
     }
   };
 
@@ -156,7 +166,7 @@ function SaleInvoicePopup({
                   <span>Buyer Previous Due</span>
                   <Input
                     type={"text"}
-                    value={selectedCustomer?.dueAmount}
+                    value={getBDFormattedNumber(selectedCustomer?.dueAmount || 0)}
                     disabled
                   />
                 </Space>
@@ -172,6 +182,10 @@ function SaleInvoicePopup({
               selectedCustomer={selectedCustomer}
               payment={payment}
               setPayment={setPayment}
+              totalQuantity={totalQuantity}
+              subTotal={subTotal}
+              adjustment={adjustment}
+              total={total}
             />
           </div>
 

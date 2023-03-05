@@ -30,6 +30,11 @@ function SalesTable({ sales, loading, title }: SITProps) {
       render: (previousDue: number) => formatBangladeshiCurrency(previousDue),
     },
     {
+      title: "Adjustment",
+      dataIndex: "adjustment",
+      render: (adjustment: number) => formatBangladeshiCurrency(adjustment),
+    },
+    {
       title: "Total with Due",
       dataIndex: "totalWithDue",
       render: (totalWithDue: number) => formatBangladeshiCurrency(totalWithDue),

@@ -30,10 +30,11 @@ function AddCustomerModal({
   }, [isSuccess, isError]);
 
   const handleAddCustomer = (customer: any) => {
+    const createdAt = new Date();
     if (customerType === "buyer") {
-      addCustomer({ ...customer, dueAmount: 0, type: customerType });
+      addCustomer({ ...customer, dueAmount: 0, type: customerType, createdAt });
     } else {
-      addCustomer({ ...customer, type: customerType });
+      addCustomer({ ...customer, type: customerType, createdAt });
     }
   };
 

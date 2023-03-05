@@ -24,7 +24,7 @@ const initialState: AuthState = {
     email: "",
     photoUrl: "",
   },
-  isLoading: false,
+  isLoading: true,
   isError: false,
   error: "",
 };
