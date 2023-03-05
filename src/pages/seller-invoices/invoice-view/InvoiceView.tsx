@@ -1,7 +1,20 @@
-import React, { useRef } from "react";
-import { Modal, Popover, Space, Table } from "antd";
+import React, { useRef, useState } from "react";
+import {
+  Button,
+  Dropdown,
+  Form,
+  Input,
+  InputNumber,
+  Menu,
+  Modal,
+  Popover,
+  Row,
+  Select,
+  Space,
+  Table,
+} from "antd";
 import { useReactToPrint } from "react-to-print";
-import { PrinterOutlined } from "@ant-design/icons";
+import { PrinterOutlined, DownOutlined } from "@ant-design/icons";
 
 import PrintMe from "../../../components/print-me/PrintMe";
 import classes from "./InvoiceView.module.css";
@@ -18,7 +31,14 @@ type IVProps = {
   setInvoiceViewModalData: (p: any) => void;
 };
 
+enum AdjustmentType {
+  "PERCENTAGE" = "Percentage",
+  "ABSOLUTE" = "Absolute",
+}
+
 function InvoiceView({ invoiceViewModalData, setInvoiceViewModalData }: IVProps) {
+  const [adjustType, setAdjustType] = useState<string>(AdjustmentType.PERCENTAGE);
+  const [adjustment, setAdjustment] = useState<number>(0);
   const componentRef = useRef<React.Component>(null);
   const filteredSales = invoiceViewModalData?.filter(
     (sale: any) => sale.lineItems.length
@@ -27,14 +47,50 @@ function InvoiceView({ invoiceViewModalData, setInvoiceViewModalData }: IVProps)
 
   let subTotal = 0;
   let totalQuantity = 0;
+  let adjustmentAmount = 0;
+
   filteredSales?.forEach((element: any) => {
     subTotal += getColumnTotal(element?.lineItems, "subtotal");
     totalQuantity += getColumnTotal(element?.lineItems, "quantity");
   });
 
+  if (adjustType === AdjustmentType.PERCENTAGE && adjustment) {
+    adjustmentAmount = (subTotal * adjustment) / 100;
+  } else {
+    adjustmentAmount = adjustment;
+  }
+
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
+
+  const onAdjustmentChange = (value: number | null) => {
+    console.log("changed", value);
+    if (
+      adjustType === AdjustmentType.PERCENTAGE &&
+      value &&
+      value >= 0 &&
+      value <= 100
+    ) {
+      setAdjustment(value);
+    } else if (
+      adjustType === AdjustmentType.ABSOLUTE &&
+      value &&
+      value >= 0 &&
+      value <= subTotal
+    ) {
+      setAdjustment(value);
+    } else {
+      setAdjustment(0);
+    }
+  };
+
+  const handleAdjustTypeChange = (value: {
+    value: string;
+    label: React.ReactNode;
+  }) => {
+    setAdjustType(value.value);
+  };
 
   const columns = [
     {
@@ -97,12 +153,75 @@ function InvoiceView({ invoiceViewModalData, setInvoiceViewModalData }: IVProps)
                 columns={columns}
               />
               <div className={classes.lineItemsTotal}>
-                <h3>
-                  {`Total Quantity: ${getBDFormattedNumber(totalQuantity)} KG`}
-                </h3>
-                <div>
-                  <h3>{`Total Amount: ${formatBangladeshiCurrency(subTotal)}`}</h3>
+                <div className={classes.adjustment}>
+                  <Row justify="space-between">
+                    <Space direction="vertical">
+                      <Select
+                        labelInValue
+                        defaultValue={{
+                          value: AdjustmentType.PERCENTAGE,
+                          label: AdjustmentType.PERCENTAGE,
+                        }}
+                        size="large"
+                        style={{
+                          width: 130,
+                          textAlign: "left",
+                        }}
+                        onChange={handleAdjustTypeChange}
+                        options={[
+                          {
+                            value: AdjustmentType.ABSOLUTE,
+                            label: AdjustmentType.ABSOLUTE,
+                          },
+                          {
+                            value: AdjustmentType.PERCENTAGE,
+                            label: AdjustmentType.PERCENTAGE,
+                          },
+                        ]}
+                      />
+                    </Space>
+                    <Space direction="vertical">
+                      <Form autoComplete="off">
+                        <Form.Item
+                          name="adjustment"
+                          rules={[
+                            {
+                              type: "number",
+                              min: 0,
+                              message: "Invalid Adjustment",
+                            },
+                            {
+                              type: "number",
+                              max:
+                                adjustType === AdjustmentType.PERCENTAGE
+                                  ? 100
+                                  : subTotal,
+                              message: "Invalid Adjustment",
+                            },
+                          ]}
+                        >
+                          <InputNumber
+                            size="large"
+                            style={{
+                              width: 200,
+                            }}
+                            onChange={onAdjustmentChange}
+                            placeholder="Adjustment"
+                          />
+                        </Form.Item>
+                      </Form>
+                    </Space>
+                  </Row>
                 </div>
+                <h3>{`Sub-Total: ${formatBangladeshiCurrency(
+                  subTotal
+                )} ( ${getBDFormattedNumber(totalQuantity)} KG)`}</h3>
+                <h3>{`Adjustment: ${formatBangladeshiCurrency(
+                  adjustmentAmount
+                )}`}</h3>
+                <h3>{`Total: ${formatBangladeshiCurrency(
+                  subTotal - adjustmentAmount
+                )}`}</h3>
               </div>
             </div>
           </div>

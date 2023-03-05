@@ -81,10 +81,16 @@
   text-align: end;
 }
 
-.paidBy {
-  margin-top: 50px;
+.lineItemsTotal h3 {
+  margin: 10px 0px;
+}
+.adjustment {
+  margin-top: 10px;
 }
 
-.paidBy p {
-  margin-left: 10px;
+
+@media print {
+  .adjustment {
+    display: none;
+  }
 }
