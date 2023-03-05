@@ -140,7 +140,8 @@ function LineItemsTable({
       <Row justify="end">
         <h3 style={{ margin: "0px" }}>
           {`Total with Due: ${formatBangladeshiCurrency(
-            getColumnTotal(lineItems, "subtotal") + selectedCustomer?.dueAmount || 0
+            getColumnTotal(lineItems, "subtotal") +
+              (selectedCustomer?.dueAmount || 0)
           )}`}
         </h3>
       </Row>

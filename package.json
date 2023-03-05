@@ -23,7 +23,8 @@
     "react-hot-toast": "^2.4.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.8.0",
-    "react-to-print": "^2.14.12"
+    "react-to-print": "^2.14.12",
+    "recharts": "^2.4.3"
   },
   "devDependencies": {
     "@types/react": "^18.0.26",

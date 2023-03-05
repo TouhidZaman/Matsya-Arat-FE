@@ -19,7 +19,7 @@ const customersAPI = apiSlice.injectEndpoints({
       invalidatesTags: ["buyers", "sellers"],
     }),
     getBuyerCustomers: builder.query({
-      query: () => `customers?type=buyer`,
+      query: (filterQuery) => `customers?type=buyer` + filterQuery,
       providesTags: ["buyers"],
     }),
     getSellerCustomers: builder.query({

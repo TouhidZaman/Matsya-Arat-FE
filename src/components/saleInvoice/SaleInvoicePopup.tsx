@@ -25,7 +25,7 @@ function SaleInvoicePopup({
 }: SIPProps) {
   const saleDate = new Date();
   const { data: buyers = [], isLoading: buyersLoading } =
-    useGetBuyerCustomersQuery(true); //need to adjust this
+    useGetBuyerCustomersQuery("");
 
   const { data: sellers = [], isLoading: sellersLoading } =
     useGetSellerCustomersQuery(true); //need to adjust this

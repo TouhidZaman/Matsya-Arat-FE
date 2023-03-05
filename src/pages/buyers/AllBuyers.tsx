@@ -9,10 +9,12 @@ import classes from "./Customers.module.css";
 import BuyersTable from "./BuyersTable";
 
 function AllBuyers() {
-  const { data: buyers = [], isLoading } = useGetBuyerCustomersQuery(true); //need to adjust this
+  const [dueSort, setDueSort] = useState(false);
+  const { data: buyers = [], isLoading } = useGetBuyerCustomersQuery(
+    dueSort ? "&sortBy=dueAmount" : ""
+  );
   const [modalVisible, setModalVisible] = useState(false);
   const [search, setSearch] = useState("");
-  const [dueSort, setDueSort] = useState(false);
   let filteredBuyers = [];
 
   //Applying search filtering

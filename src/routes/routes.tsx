@@ -1,7 +1,7 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import AppLayout from "../layout/AppLayout";
-import Login from "../pages/Login";
-import Dashboard from "../pages/Dashboard";
+import Login from "../pages/login/Login";
+import Dashboard from "../pages/dashboard/Dashboard";
 import NotFound from "../components/NotFound";
 import PrivateRoute from "../utils/PrivateRoute";
 import AllBuyers from "../pages/buyers/AllBuyers";

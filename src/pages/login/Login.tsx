@@ -4,10 +4,10 @@ import { Button, Form, Input, Row, Space, Switch, Typography } from "antd";
 import { toast } from "react-hot-toast";
 
 import classes from "./Login.module.css";
-import teddy from "../assets/images/teddy.png";
-import LoadingScreen from "../components/Loading";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { loginUser, resetError, selectAuth } from "../features/authSlice";
+import teddy from "../../assets/images/teddy.png";
+import LoadingScreen from "../../components/Loading";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { loginUser, resetError, selectAuth } from "../../features/authSlice";
 
 const { Text } = Typography;
 

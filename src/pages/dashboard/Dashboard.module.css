@@ -1,0 +1,24 @@
+.charts {
+  padding: 30px 0px;
+}
+.chartsContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 50px;
+    margin-bottom: 50px;
+}
+.chartsContainer h3 {
+    color: dimgray;
+    margin: 15px 0;
+}
+
+
+/* Adjustments For Mobile view  */
+@media screen and (max-width: 768px) {
+    .chartsContainer {
+        /* display: grid; */
+        grid-template-columns: 1fr;
+        justify-content: center;
+        gap: 30px;
+    }
+}
