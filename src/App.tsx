@@ -17,7 +17,13 @@ function App() {
     // dispatch(setUserLoading());
     onAuthStateChanged(auth, (user) => {
       if (user?.email) {
-        dispatch(setUser(user));
+        dispatch(
+          setUser({
+            name: user.displayName,
+            email: user.email,
+            photoUrl: user.photoURL,
+          })
+        );
       }
     });
   }, [dispatch]);

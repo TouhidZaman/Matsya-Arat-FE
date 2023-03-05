@@ -8,7 +8,13 @@ const saleInvoicesAPI = apiSlice.injectEndpoints({
         method: "POST",
         body: newSale,
       }),
-      invalidatesTags: ["sales", "buyers"],
+      invalidatesTags: [
+        "sales",
+        "buyers",
+        "salesBySellerId",
+        "salesByBuyerId",
+        "customer",
+      ],
     }),
     getSales: builder.query({
       query: () => `sales`,

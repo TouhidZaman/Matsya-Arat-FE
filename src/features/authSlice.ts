@@ -3,9 +3,15 @@ import type { RootState } from "../app/store";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import auth from "../utils/firebase.init";
 
+type User = {
+  name?: string | null;
+  email: string | null;
+  photoUrl?: string | null;
+};
+
 // Define a type for the slice state
 interface AuthState {
-  user: object | null;
+  user: User;
   isLoading: boolean;
   isError: boolean;
   error: string | undefined;
@@ -13,7 +19,11 @@ interface AuthState {
 
 // Define the initial state using that type
 const initialState: AuthState = {
-  user: null,
+  user: {
+    name: "",
+    email: "",
+    photoUrl: "",
+  },
   isLoading: false,
   isError: false,
   error: "",
@@ -24,7 +34,12 @@ export const loginUser = createAsyncThunk(
   async ({ email, password }: { email: string; password: string }, thunkAPI) => {
     try {
       const res = await signInWithEmailAndPassword(auth, email, password);
-      return res?.user;
+      const { user } = res;
+      return {
+        name: user.displayName,
+        email: user.email,
+        photoUrl: user.photoURL,
+      };
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -49,7 +64,11 @@ export const authSlice = createSlice({
       state.error = "";
     },
     logOut: (state) => {
-      state.user = null;
+      state.user = {
+        name: "",
+        email: "",
+        photoUrl: "",
+      };
     },
   },
   extraReducers(builder) {

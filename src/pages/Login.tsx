@@ -22,13 +22,13 @@ function Login() {
   const from = location.state?.from?.pathname || "/";
 
   useEffect(() => {
-    if (!isLoading && user) {
+    if (!isLoading && user.email) {
       toast.success("Login successful");
       navigate(from, { replace: true });
     } else if (!isLoading && isError) {
       dispatch(resetError());
     }
-  }, [user, isLoading]);
+  }, [user.email, isLoading]);
 
   // Handling Form submit
   const handleLogin = (data: { email: string; password: string }) => {
