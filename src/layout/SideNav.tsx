@@ -56,10 +56,10 @@ function SideNav() {
   return (
     <>
       <Link to="/dashboard">
-        <Row justify="center" align="middle">
+        <Row justify="start" align="middle">
           <img height={"40px"} src={logo} alt="" />
           <h3 style={{ marginLeft: "8px", color: "#1890ff", fontSize: "18px" }}>
-            Sonali Matsya Arat
+            Matsya Arat
           </h3>
         </Row>
       </Link>

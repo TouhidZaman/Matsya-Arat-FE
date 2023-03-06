@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import routes from "./routes/routes";
 import auth from "./utils/firebase.init";
 import { useAppDispatch } from "./app/hooks";
-import { setUser, setUserLoading } from "./features/authSlice";
+import { logOut, setUser } from "./features/authSlice";
 import "./assets/styles/main.css";
 import "./assets/styles/responsive.css";
 
@@ -14,7 +14,6 @@ function App() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    // dispatch(setUserLoading());
     onAuthStateChanged(auth, (user) => {
       if (user?.email) {
         dispatch(
@@ -24,6 +23,8 @@ function App() {
             photoUrl: user.photoURL,
           })
         );
+      } else {
+        dispatch(logOut());
       }
     });
   }, [dispatch]);

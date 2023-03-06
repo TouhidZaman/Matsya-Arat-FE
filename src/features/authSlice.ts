@@ -54,11 +54,6 @@ export const authSlice = createSlice({
       state.user = payload;
       state.isLoading = false;
     },
-    setUserLoading: (state) => {
-      state.isLoading = true;
-      state.isError = false;
-    },
-
     resetError: (state) => {
       state.isError = false;
       state.error = "";
@@ -69,6 +64,7 @@ export const authSlice = createSlice({
         email: "",
         photoUrl: "",
       };
+      state.isLoading = false;
     },
   },
   extraReducers(builder) {
@@ -90,7 +86,7 @@ export const authSlice = createSlice({
   },
 });
 
-export const { setUser, setUserLoading, resetError, logOut } = authSlice.actions;
+export const { setUser, resetError, logOut } = authSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectAuth = (state: RootState) => state.auth;
