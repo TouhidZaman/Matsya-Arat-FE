@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Col, Row, Space, Popover, Spin } from "antd";
+import { Col, Row, Space, Popover, Spin, Button } from "antd";
 import {
   ArrowLeftOutlined,
   EditOutlined,
@@ -11,6 +11,7 @@ import classes from "./CustomerTopView.module.css";
 import { useGetCustomerByIdQuery } from "../../features/customer/customersAPI";
 import { formatBangladeshiCurrency } from "../../utils/formatNumber";
 import UpdateCustomerModal from "./UpdateCustomerModal";
+import PaymentModal from "../../components/payment-modal/PaymentModal";
 
 type CTVProps = {
   customerType: string;
@@ -18,7 +19,7 @@ type CTVProps = {
 
 const CustomerTopView = ({ customerType }: CTVProps) => {
   const [editModalVisible, setEditModalVisible] = useState(false);
-  const [customerInfo, setCustomerInfo] = useState(null);
+  const [paymentModalVisible, setPaymentModalVisible] = useState(false);
 
   const params = useParams();
   const navigate = useNavigate();
@@ -28,11 +29,6 @@ const CustomerTopView = ({ customerType }: CTVProps) => {
     customerId!,
     { skip: !customerId }
   );
-
-  const shoEditModal = (customer: any) => {
-    setCustomerInfo(customer);
-    setEditModalVisible(true);
-  };
 
   return (
     <>
@@ -62,7 +58,21 @@ const CustomerTopView = ({ customerType }: CTVProps) => {
           </Space>
         </Col>
         <Col>
-          <Space>
+          <Space size={"large"}>
+            {!buyerLoading && customerType === "buyer" ? (
+              <Popover
+                overlayStyle={{ zIndex: 1000 }}
+                placement="bottom"
+                content="Pay credit Amount"
+              >
+                <Button
+                  icon={<TransactionOutlined style={{ color: "#3168eb" }} />}
+                  onClick={() => setPaymentModalVisible(true)}
+                >
+                  Buyer Payment
+                </Button>
+              </Popover>
+            ) : null}
             <Popover
               overlayStyle={{ zIndex: 1000 }}
               placement="bottom"
@@ -70,7 +80,7 @@ const CustomerTopView = ({ customerType }: CTVProps) => {
             >
               <button
                 type="button"
-                onClick={() => shoEditModal(buyer)}
+                onClick={() => setEditModalVisible(true)}
                 className={classes.actionButton}
               >
                 <EditOutlined />
@@ -79,11 +89,18 @@ const CustomerTopView = ({ customerType }: CTVProps) => {
           </Space>
         </Col>
       </Row>
+      {paymentModalVisible ? (
+        <PaymentModal
+          modalVisible={paymentModalVisible}
+          setModalVisible={setPaymentModalVisible}
+          buyer={buyer}
+        />
+      ) : null}
       {editModalVisible ? (
         <UpdateCustomerModal
           modalVisible={editModalVisible}
           setModalVisible={setEditModalVisible}
-          customerInfo={customerInfo}
+          customerInfo={buyer}
         />
       ) : null}
     </>

@@ -65,7 +65,7 @@ function InvoiceView({ invoiceViewModalData, setInvoiceViewModalData }: IVProps)
   });
 
   const onAdjustmentChange = (value: number | null) => {
-    console.log("changed", value);
+    // console.log("changed", value);
     if (
       adjustType === AdjustmentType.PERCENTAGE &&
       value &&

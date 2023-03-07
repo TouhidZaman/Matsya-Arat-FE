@@ -1,72 +1,77 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { Input, Row, DatePicker } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import classes from "./Sales.module.css";
+
+import classes from "./Payments.module.css";
 import { getFormattedDate } from "../../utils/formatDate";
 import type { DatePickerProps } from "antd";
-import SalesTable from "./SalesTable";
+import PaymentsTable from "../../components/payments/PaymentsTable";
 
-type BSProps = {
-  sales: any[];
+interface PaymentsProps {
+  payments: any;
   isLoading: boolean;
   title: string;
-};
+}
 
-const Sales = ({ sales, isLoading, title }: BSProps) => {
+const Payments = ({ payments, isLoading, title }: PaymentsProps) => {
   const [search, setSearch] = useState("");
-  const [dateWiseSales, setDateWiseSales] = useState(sales);
+  const [dateWisePayments, setDateWisePayments] = useState(payments);
   let searchFilteredSales = [];
 
   //setting sales into date wise sales
   useEffect(() => {
-    setDateWiseSales(sales);
-  }, [sales]);
+    setDateWisePayments(payments);
+  }, [payments]);
 
   //Date Filtering
   const handleDateChange: DatePickerProps["onChange"] = (date: any, dateString) => {
-    console.log(date, dateString, "from date selector");
     let dateFiltered: any = [];
     if (dateString) {
-      if (sales.length > 0) {
-        sales.forEach((sale: any) => {
-          if (dateString === getFormattedDate(new Date(sale.date))) {
-            dateFiltered.push(sale);
+      if (payments.length > 0) {
+        payments.forEach((payment: any) => {
+          if (dateString === getFormattedDate(new Date(payment.createdAt))) {
+            dateFiltered.push(payment);
           }
         });
-        setDateWiseSales(dateFiltered);
+        setDateWisePayments(dateFiltered);
       }
     } else {
-      setDateWiseSales(sales);
+      setDateWisePayments(payments);
     }
   };
 
   //Applying search filtering
   if (search) {
     let keywordsArray = search.split(" ");
-    searchFilteredSales = dateWiseSales.filter((sale: any) =>
+    searchFilteredSales = dateWisePayments.filter((sale: any) =>
       keywordsArray.some(
         (keyword) =>
           sale.buyerName?.toLowerCase().includes(keyword.toLowerCase()) ||
-          getFormattedDate(new Date(sale.date)).includes(keyword)
+          getFormattedDate(new Date(sale.createdAt)).includes(keyword)
       )
     );
   } else {
-    searchFilteredSales = dateWiseSales;
+    searchFilteredSales = dateWisePayments;
   }
 
   return (
-    <section className={classes.sales}>
+    <section className={classes.payments}>
       <Row justify={"space-between"} className={classes.actions}>
         <Input
-          placeholder="Search Sales using buyer or date"
+          placeholder="Search payments using buyer or date"
           prefix={<SearchOutlined />}
           onChange={(e) => setSearch(e.target.value)}
         />
         <DatePicker size="small" onChange={handleDateChange} format={"DD/MM/YYYY"} />
       </Row>
-      <SalesTable sales={searchFilteredSales} loading={isLoading} title={title} />
+      <PaymentsTable
+        payments={searchFilteredSales}
+        loading={isLoading}
+        title={title}
+      />
     </section>
   );
 };
 
-export default Sales;
+export default Payments;

@@ -50,6 +50,7 @@ function AllSellers() {
           modalVisible={modalVisible}
           customerType="seller"
           setModalVisible={setModalVisible}
+          customers={sellers}
         />
       )}
     </section>

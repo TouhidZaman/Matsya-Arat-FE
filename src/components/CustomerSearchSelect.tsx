@@ -46,6 +46,7 @@ function CustomerSearchSelect({
           modalVisible={customerModalVisible}
           customerType={"buyer"}
           setModalVisible={setCustomerModalVisible}
+          customers={customers}
           // handleCustomerCreated={handleVehicleCreated}
         />
       )}

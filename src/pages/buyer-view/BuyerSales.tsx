@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
-import Sales from "../../../components/sales/Sales";
-import { useGetSalesByBuyerIdQuery } from "../../../features/saleInvoice/saleInvoicesAPI";
+import Sales from "../../components/sales/Sales";
+import { useGetSalesByBuyerIdQuery } from "../../features/saleInvoice/saleInvoicesAPI";
 
 const BuyerSales = () => {
   const { buyerId } = useParams();

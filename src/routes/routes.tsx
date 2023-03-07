@@ -6,10 +6,12 @@ import NotFound from "../components/NotFound";
 import PrivateRoute from "../utils/PrivateRoute";
 import AllBuyers from "../pages/buyers/AllBuyers";
 import AllSellers from "../pages/sellers/AllSellers";
-import AllSales from "../pages/all-sales/AllSales";
+import AllSales from "../pages/AllSales";
 import SellerInvoices from "../pages/seller-invoices/SellerInvoices";
 import BuyerView from "../pages/buyer-view/BuyerView";
-import BuyerSales from "../pages/buyer-view/buyer-sales/BuyerSales";
+import BuyerSales from "../pages/buyer-view/BuyerSales";
+import BuyerPayments from "../pages/buyer-view/BuyerPayments";
+import AllPayments from "../pages/AllPayments";
 
 const routes = createBrowserRouter([
   {
@@ -46,7 +48,7 @@ const routes = createBrowserRouter([
           },
           {
             path: "credit-payments",
-            element: <h3>Payments</h3>,
+            element: <BuyerPayments />,
           },
         ],
       },
@@ -61,6 +63,10 @@ const routes = createBrowserRouter([
       {
         path: "/all-sales",
         element: <AllSales />,
+      },
+      {
+        path: "/all-payments",
+        element: <AllPayments />,
       },
       {
         path: "*",

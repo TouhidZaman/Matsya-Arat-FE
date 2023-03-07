@@ -62,6 +62,7 @@ function AllBuyers() {
           modalVisible={modalVisible}
           customerType="buyer"
           setModalVisible={setModalVisible}
+          customers={buyers}
         />
       )}
     </section>

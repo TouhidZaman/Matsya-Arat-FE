@@ -1,26 +1,26 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { EditOutlined, PlusSquareOutlined } from "@ant-design/icons";
+import {
+  EditOutlined,
+  PlusSquareOutlined,
+  TransactionOutlined,
+} from "@ant-design/icons";
 import { Button, Col, Row, Table, Tooltip } from "antd";
 
 import UpdateCustomerModal from "../../components/customers/UpdateCustomerModal";
 import SaleInvoicePopup from "../../components/saleInvoice/SaleInvoicePopup";
 import { formatBangladeshiCurrency } from "../../utils/formatNumber";
+import PaymentModal from "../../components/payment-modal/PaymentModal";
 
 function BuyersTable({ customers, loading }: { customers: []; loading: boolean }) {
+  const [newSaleModalVisible, setNewSaleModalVisible] = useState(false);
+  const [paymentModalVisible, setPaymentModalVisible] = useState(false);
   const [editModalVisible, setEditModalVisible] = useState(false);
-  const [customerInfo, setCustomerInfo] = useState(null);
-  const [saleModalVisible, setSaleModalVisible] = useState(false);
-  const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [selectedBuyer, setSelectedBuyer] = useState(null);
 
-  const handleNewSaleOpen = (customer: any) => {
-    setSelectedCustomer(customer);
-    setSaleModalVisible(true);
-  };
-
-  const shoEditModal = (customer: any) => {
-    setCustomerInfo(customer);
-    setEditModalVisible(true);
+  const showModal = (customer: any, setModalVisible: any) => {
+    setSelectedBuyer(customer);
+    setModalVisible(true);
   };
 
   const columns = [
@@ -54,14 +54,30 @@ function BuyersTable({ customers, loading }: { customers: []; loading: boolean }
         <Row justify="start">
           <Col>
             <Tooltip title="New Sale">
-              <Button type="text" onClick={() => handleNewSaleOpen(customer)}>
+              <Button
+                type="text"
+                onClick={() => showModal(customer, setNewSaleModalVisible)}
+              >
                 <PlusSquareOutlined />
               </Button>
             </Tooltip>
           </Col>
+          <Col>
+            <Tooltip title="New Credit Payment">
+              <Button
+                type="text"
+                onClick={() => showModal(customer, setPaymentModalVisible)}
+              >
+                <TransactionOutlined />
+              </Button>
+            </Tooltip>
+          </Col>
           <Col offset={1}>
-            <Tooltip title="Edit">
-              <Button type="text" onClick={() => shoEditModal(customer)}>
+            <Tooltip title="Edit Buyer">
+              <Button
+                type="text"
+                onClick={() => showModal(customer, setEditModalVisible)}
+              >
                 <EditOutlined />
               </Button>
             </Tooltip>
@@ -84,18 +100,25 @@ function BuyersTable({ customers, loading }: { customers: []; loading: boolean }
           //   className: classes.excludeMeFromPrint,
         }}
       />
+      {paymentModalVisible ? (
+        <PaymentModal
+          modalVisible={paymentModalVisible}
+          setModalVisible={setPaymentModalVisible}
+          buyer={selectedBuyer}
+        />
+      ) : null}
       {editModalVisible ? (
         <UpdateCustomerModal
           modalVisible={editModalVisible}
           setModalVisible={setEditModalVisible}
-          customerInfo={customerInfo}
+          customerInfo={selectedBuyer}
         />
       ) : null}
-      {saleModalVisible ? (
+      {newSaleModalVisible ? (
         <SaleInvoicePopup
-          modalVisible={saleModalVisible}
-          setModalVisible={setSaleModalVisible}
-          customerViaProp={selectedCustomer}
+          modalVisible={newSaleModalVisible}
+          setModalVisible={setNewSaleModalVisible}
+          customerViaProp={selectedBuyer}
         />
       ) : null}
     </>

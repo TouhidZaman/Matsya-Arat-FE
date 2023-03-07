@@ -1,5 +1,5 @@
-import { useGetSalesQuery } from "../../features/saleInvoice/saleInvoicesAPI";
-import Sales from "../../components/sales/Sales";
+import { useGetSalesQuery } from "../features/saleInvoice/saleInvoicesAPI";
+import Sales from "../components/sales/Sales";
 
 const AllSales = () => {
   const { data: sales = [], isLoading } = useGetSalesQuery(true);

@@ -129,7 +129,11 @@ function LineItemsTable({
       align: "center",
       render: (_: any, record: any) => (
         <Row justify="center">
-          <Button type="text" onClick={() => handleDelete(record)}>
+          <Button
+            disabled={lineItems.length <= 1}
+            type="text"
+            onClick={() => handleDelete(record)}
+          >
             <DeleteOutlined />
           </Button>
         </Row>

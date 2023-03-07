@@ -84,7 +84,7 @@ function EditableNumberField({
     <Row justify="start" align="middle">
       <Col span={14}>
         <Popover
-          visible={error.isError}
+          open={error.isError}
           content={error.message}
           overlayStyle={{ zIndex: 1000 }}
         >

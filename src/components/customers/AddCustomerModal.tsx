@@ -10,12 +10,14 @@ interface ACMProps {
   modalVisible: boolean;
   customerType: string;
   setModalVisible: (value: boolean) => void;
+  customers: any;
 }
 
 function AddCustomerModal({
   modalVisible,
   customerType,
   setModalVisible,
+  customers,
 }: ACMProps) {
   const [form] = Form.useForm();
   const [addCustomer, { isSuccess, isError }] = useCreateCustomerMutation();
@@ -29,7 +31,23 @@ function AddCustomerModal({
     }
   }, [isSuccess, isError]);
 
+  const handleVerifyCustomer = (customer: any) => {
+    //will store boolean value only
+    return !!customers?.find(
+      (c: any) =>
+        c?.name?.replaceAll(" ", "")?.toLowerCase() ===
+        customer?.name?.replaceAll(" ", "")?.toLowerCase()
+    );
+  };
+
   const handleAddCustomer = (customer: any) => {
+    const isCustomerExist = handleVerifyCustomer(customer);
+    if (isCustomerExist) {
+      toast.error(`${customerType} already exist, try different name`, {
+        id: "customer-exist",
+      });
+      return;
+    }
     const createdAt = new Date();
     if (customerType === "buyer") {
       addCustomer({ ...customer, dueAmount: 0, type: customerType, createdAt });

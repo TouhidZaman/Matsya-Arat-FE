@@ -4,7 +4,7 @@ import { signOut } from "firebase/auth";
 import { Button, Menu, Row } from "antd";
 
 import "./Layout.css";
-import logo from "../assets/images/logo.svg";
+import logo from "../assets/images/fish.png";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { logOut, selectAuth } from "../features/authSlice";
 import auth from "../utils/firebase.init";
@@ -48,6 +48,7 @@ function SideNav() {
     ["dashboard", "Dashboard", "home"],
     ["buyers", "Buyers", "groups"],
     ["all-sales", "All Sales", "paid"],
+    ["all-payments", "All Payments", "payments"],
     ["sellers", "Sellers", "receipt_long"],
     ["Account Pages"],
     ["settings", "Settings", "settings"],
