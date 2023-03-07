@@ -8,7 +8,8 @@ import AllBuyers from "../pages/buyers/AllBuyers";
 import AllSellers from "../pages/sellers/AllSellers";
 import AllSales from "../pages/all-sales/AllSales";
 import SellerInvoices from "../pages/seller-invoices/SellerInvoices";
-import BuyerSales from "../pages/buyer-sales/BuyerSales";
+import BuyerView from "../pages/buyer-view/BuyerView";
+import BuyerSales from "../pages/buyer-view/buyer-sales/BuyerSales";
 
 const routes = createBrowserRouter([
   {
@@ -33,7 +34,21 @@ const routes = createBrowserRouter([
       },
       {
         path: "/buyers/:buyerId",
-        element: <BuyerSales />,
+        element: <BuyerView />,
+        children: [
+          {
+            index: true,
+            element: <Navigate to="sales" />,
+          },
+          {
+            path: "sales",
+            element: <BuyerSales />,
+          },
+          {
+            path: "credit-payments",
+            element: <h3>Payments</h3>,
+          },
+        ],
       },
       {
         path: "/sellers",
