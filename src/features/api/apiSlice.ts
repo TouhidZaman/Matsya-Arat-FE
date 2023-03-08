@@ -18,6 +18,8 @@ export const apiSlice = createApi({
     "salesByBuyerId",
     "payments",
     "paymentsByBuyerId",
+    "salesByDateGroup",
+    "paymentsByDateGroup",
   ],
   endpoints: () => ({}),
 });

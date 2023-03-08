@@ -25,17 +25,17 @@ function SalesTable({ sales, loading, title }: SITProps) {
       ),
     },
     {
-      title: "Previous Due",
+      title: "Prev Due",
       dataIndex: "previousDue",
       render: (previousDue: number) => formatBangladeshiCurrency(previousDue),
     },
+    // {
+    //   title: "Adjustment",
+    //   dataIndex: "adjustment",
+    //   render: (adjustment: number) => formatBangladeshiCurrency(adjustment),
+    // },
     {
-      title: "Adjustment",
-      dataIndex: "adjustment",
-      render: (adjustment: number) => formatBangladeshiCurrency(adjustment),
-    },
-    {
-      title: "Total with Due",
+      title: "Total",
       dataIndex: "totalWithDue",
       render: (totalWithDue: number) => formatBangladeshiCurrency(totalWithDue),
     },

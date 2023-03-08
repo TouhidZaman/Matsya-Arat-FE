@@ -46,7 +46,7 @@ const DrawAreaChart = ({
         <Area
           type="monotone"
           dataKey={secondDataKey}
-          stackId="1"
+          stackId="2"
           stroke="#ffc658"
           fill="#ffc658"
         />

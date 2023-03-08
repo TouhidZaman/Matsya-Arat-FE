@@ -110,6 +110,7 @@ function SaleInvoicePopup({
   const handleNewSale = () => {
     const isValid = validate(); // validating invoice data
     if (isValid) {
+      const date = new Date();
       const newSale = {
         buyerId: selectedCustomer._id,
         buyerName: selectedCustomer.name,
@@ -120,8 +121,8 @@ function SaleInvoicePopup({
         adjustment,
         totalWithDue: total,
         paid: payment,
-        date: format(saleDate, "yyyy-MM-dd"),
-        createdAt: saleDate,
+        date: format(date, "yyyy-MM-dd"),
+        createdAt: date,
       };
       addNewSale(newSale);
       // console.log(newSale, "new sale");

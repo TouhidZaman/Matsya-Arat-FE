@@ -25,7 +25,7 @@ function BuyersTable({ customers, loading }: { customers: []; loading: boolean }
 
   const columns = [
     {
-      title: "Customer Name",
+      title: "Buyer Name ( পাইকার )",
       render: (customer: any) => (
         <Link to={`/buyers/${customer._id}`}>{customer.name}</Link>
       ),

@@ -8,11 +8,21 @@ const paymentsAPI = apiSlice.injectEndpoints({
         method: "POST",
         body: payment,
       }),
-      invalidatesTags: ["buyers", "customer", "paymentsByBuyerId", "payments"],
+      invalidatesTags: [
+        "buyers",
+        "customer",
+        "paymentsByBuyerId",
+        "payments",
+        "paymentsByDateGroup",
+      ],
     }),
     getPayments: builder.query({
       query: () => `payments`,
       providesTags: ["payments"],
+    }),
+    getPaymentsByDateGroup: builder.query({
+      query: (filter) => `payments/date?` + filter,
+      providesTags: ["paymentsByDateGroup"],
     }),
     getPaymentsByBuyerId: builder.query({
       query: (buyerId) => `/payments/buyer/${buyerId}`,
@@ -25,4 +35,5 @@ export const {
   useCreatePaymentMutation,
   useGetPaymentsQuery,
   useGetPaymentsByBuyerIdQuery,
+  useGetPaymentsByDateGroupQuery,
 } = paymentsAPI;

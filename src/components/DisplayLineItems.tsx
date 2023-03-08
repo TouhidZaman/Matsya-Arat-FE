@@ -1,6 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { formatBangladeshiCurrency } from "../utils/formatNumber";
+import {
+  formatBangladeshiCurrency,
+  getBDFormattedNumber,
+  getFormattedQuantity,
+} from "../utils/formatNumber";
 
 type DLIProps = { lineItems: any; isSeller?: boolean };
 
@@ -15,9 +19,9 @@ function DisplayLineItems({ lineItems, isSeller }: DLIProps) {
               {" : "}
             </>
           )}
-          {`${formatBangladeshiCurrency(item.rate)} * ${
+          {`${formatBangladeshiCurrency(item.rate)} * ${getFormattedQuantity(
             item.quantity
-          } Kg = ${formatBangladeshiCurrency(item.subtotal)}`}
+          )} = ${formatBangladeshiCurrency(item.subtotal)}`}
         </p>
       ))}
     </div>

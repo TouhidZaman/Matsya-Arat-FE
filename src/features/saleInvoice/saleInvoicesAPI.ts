@@ -14,11 +14,16 @@ const saleInvoicesAPI = apiSlice.injectEndpoints({
         "salesBySellerId",
         "salesByBuyerId",
         "customer",
+        "salesByDateGroup",
       ],
     }),
     getSales: builder.query({
       query: () => `sales`,
       providesTags: ["sales"],
+    }),
+    getSalesByDateGroup: builder.query({
+      query: (filter) => `sales/date?` + filter,
+      providesTags: ["salesByDateGroup"],
     }),
     getSalesBySellerId: builder.query({
       query: (sellerId) => `/sales/seller/${sellerId}`,
@@ -36,4 +41,5 @@ export const {
   useGetSalesQuery,
   useGetSalesBySellerIdQuery,
   useGetSalesByBuyerIdQuery,
+  useGetSalesByDateGroupQuery,
 } = saleInvoicesAPI;

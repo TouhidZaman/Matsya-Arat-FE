@@ -6,6 +6,7 @@ import SearchableSelectField from "../SearchableSelectField";
 import {
   formatBangladeshiCurrency,
   getBDFormattedNumber,
+  getFormattedQuantity,
 } from "../../utils/formatNumber";
 import EditableNumberField from "../EditableNumberField";
 
@@ -145,7 +146,9 @@ function LineItemsTable({
     <>
       <Row justify="end">
         <h3 style={{ margin: "0px" }}>
-          {`Sub-Total: ${formatBangladeshiCurrency(subTotal)} (${totalQuantity} Kg)`}
+          {`Sub-Total: ${formatBangladeshiCurrency(
+            subTotal
+          )} (${getFormattedQuantity(totalQuantity)})`}
         </h3>
       </Row>
       <Row justify="end">

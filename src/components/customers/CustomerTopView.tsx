@@ -45,7 +45,11 @@ const CustomerTopView = ({ customerType }: CTVProps) => {
               <span className={classes.title}>
                 {buyerLoading ? <Spin>buyer name</Spin> : buyer.name}
               </span>
-              <span className={classes.customBadge}>{customerType}</span>
+              <span className={classes.customBadge}>
+                {customerType === "buyer"
+                  ? "Buyer - ( পাইকার )"
+                  : "Seller - ( মাছ বিক্রেতা )"}
+              </span>
             </Space>
             {!buyerLoading && customerType === "buyer" ? (
               <Space className={classes.dueAmount}>

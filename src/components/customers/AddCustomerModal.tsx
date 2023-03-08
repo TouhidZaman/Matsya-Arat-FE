@@ -41,6 +41,14 @@ function AddCustomerModal({
   };
 
   const handleAddCustomer = (customer: any) => {
+    //checking name length
+    if (customer?.name?.length > 20) {
+      toast.error(`${customerType} name more then 20 characters is not allowed`, {
+        id: "customer-length",
+      });
+      return;
+    }
+
     const isCustomerExist = handleVerifyCustomer(customer);
     if (isCustomerExist) {
       toast.error(`${customerType} already exist, try different name`, {

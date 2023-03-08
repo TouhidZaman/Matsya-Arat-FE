@@ -20,7 +20,7 @@ import PrintMe from "../../../components/print-me/PrintMe";
 import classes from "./InvoiceView.module.css";
 import {
   formatBangladeshiCurrency,
-  getBDFormattedNumber,
+  getFormattedQuantity,
 } from "../../../utils/formatNumber";
 import { getFormattedDate } from "../../../utils/formatDate";
 import getColumnTotal from "../../../utils/getTotal";
@@ -99,7 +99,7 @@ function InvoiceView({ invoiceViewModalData, setInvoiceViewModalData }: IVProps)
       render: (date: Date) => getFormattedDate(new Date(date)),
     },
     {
-      title: "Buyer Name",
+      title: "Buyer Name ( পাইকার )",
       dataIndex: "buyerName",
     },
     {
@@ -215,7 +215,7 @@ function InvoiceView({ invoiceViewModalData, setInvoiceViewModalData }: IVProps)
                 </div>
                 <h3>{`Sub-Total: ${formatBangladeshiCurrency(
                   subTotal
-                )} ( ${getBDFormattedNumber(totalQuantity)} KG)`}</h3>
+                )} ( ${getFormattedQuantity(totalQuantity)} )`}</h3>
                 <h3>{`Adjustment: ${formatBangladeshiCurrency(
                   adjustmentAmount
                 )}`}</h3>

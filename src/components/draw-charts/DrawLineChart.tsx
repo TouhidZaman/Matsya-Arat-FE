@@ -9,7 +9,14 @@ import {
   YAxis,
 } from "recharts";
 
-const DrawLineChart = ({ data, xAxis, dataKey, ...props }: any) => {
+interface DLCProps {
+  data: any[];
+  xAxis: string;
+  dataKey: string;
+  props?: any;
+}
+
+const DrawLineChart = ({ data, xAxis, dataKey, ...props }: DLCProps) => {
   const margin = {
     top: 10,
     right: 30,

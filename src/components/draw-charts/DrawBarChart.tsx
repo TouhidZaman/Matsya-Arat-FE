@@ -27,8 +27,8 @@ const DrawBarChart = ({
     <ResponsiveContainer width="100%" height={250}>
       <BarChart margin={margin} data={data} {...props}>
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey={xAxis} />
         <YAxis />
+        <XAxis dataKey={xAxis} />
         <Tooltip />
         <Legend
           verticalAlign="bottom"
@@ -39,15 +39,15 @@ const DrawBarChart = ({
           type="monotone"
           dataKey={firstDataKey}
           stackId="1"
-          stroke="#82ca9d"
-          fill="#82ca9d"
+          stroke="#ffc658"
+          fill="#ffc658"
         />
         <Bar
           type="monotone"
           dataKey={secondDataKey}
-          stackId="1"
-          stroke="#ffc658"
-          fill="#ffc658"
+          stackId="2"
+          stroke="#82ca9d"
+          fill="#82ca9d"
         />
       </BarChart>
     </ResponsiveContainer>

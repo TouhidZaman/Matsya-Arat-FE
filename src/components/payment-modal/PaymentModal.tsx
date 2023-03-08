@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { toast } from "react-hot-toast";
+import { format } from "date-fns";
 import { Form, Modal } from "antd";
 
 import classes from "./PaymentModal.module.css";
@@ -28,7 +29,7 @@ function PaymentModal({ modalVisible, setModalVisible, buyer }: PaymentModalProp
 
   const handlePayment = (payment: any) => {
     if (payment.paid && payment.dueAmount) {
-      const createdAt = new Date();
+      const date = new Date();
       const dueAfterPayment = buyer.dueAmount - payment.paid;
       const newPayment = {
         buyerName: buyer.name,
@@ -36,7 +37,8 @@ function PaymentModal({ modalVisible, setModalVisible, buyer }: PaymentModalProp
         previousDue: buyer.dueAmount,
         paid: payment.paid,
         currentDue: dueAfterPayment,
-        createdAt,
+        date: format(date, "yyyy-MM-dd"),
+        createdAt: date,
       };
       console.log(newPayment, "newPayment");
       payNow(newPayment);

@@ -4,7 +4,7 @@ import loading from "../assets/images/loading.svg";
 
 const Loading = () => {
   return (
-    <Row justify={"center"} align={"middle"} style={{ height: "100vh" }}>
+    <Row justify={"center"} align={"middle"} style={{ marginTop: "200px" }}>
       <img src={loading} alt="loading" />
     </Row>
   );
